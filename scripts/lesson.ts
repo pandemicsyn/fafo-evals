@@ -56,12 +56,12 @@ if (lesson === 8)
   console.log(
     'SYNTHETIC variation demo: [pass, fail, pass, pass, fail]. Three of five trials passed; one success does not establish repeatability. These are not model measurements.',
   );
-if ([5, 6, 9].includes(lesson)) {
+if (lesson === 5 || lesson === 6 || lesson === 9) {
   const challenge = {
     5: { file: 'trajectory.ts', run: () => checkTrajectory(learnerTrajectory) },
     6: { file: 'conversation.ts', run: () => checkConversation(learnerConversation) },
     9: { file: 'isolation.ts', run: () => checkIsolation(learnerTrialStore) },
-  }[lesson]!;
+  }[lesson];
   const results = challenge.run();
   console.log('SYNTHETIC exercise checks — no model calls.');
   console.table(results);

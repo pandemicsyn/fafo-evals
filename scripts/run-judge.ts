@@ -4,7 +4,12 @@ import { randomUUID } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { loadEnv, requireKey, modelId } from '../src/config.ts';
 import { calibrationExamples } from '../src/evals/recordings.ts';
-import { assessPair, openRouterJudgeHarness, RUBRIC_VERSION } from '../src/evals/judge.ts';
+import {
+  assessPair,
+  openRouterJudgeHarness,
+  RUBRIC_VERSION,
+  type JudgeResponseMetadata,
+} from '../src/evals/judge.ts';
 import { saveArtifact } from '../src/evals/artifacts.ts';
 loadEnv();
 // LESSON 7: these inputs are fixed so disagreements isolate the judge, not a changing app output.
@@ -40,7 +45,7 @@ try {
   const results = [];
   for (const example of examples)
     for (let trial = 1; trial <= repetitions; trial++) {
-      let metadata: unknown = null;
+      let metadata: JudgeResponseMetadata | null = null;
       const human = labels[example.id] ?? example.human;
       try {
         const verdict = await assessPair(

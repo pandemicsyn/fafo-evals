@@ -97,7 +97,7 @@ export function createTriageHarness(options: {
       let error: Error | undefined;
       let events: TranscriptEvent[] = [];
       let after = before;
-      const admissions: unknown[] = [];
+      const admissions: Awaited<ReturnType<typeof conversation.send>>[] = [];
       try {
         for (const body of turns) {
           const admission = await conversation.send({

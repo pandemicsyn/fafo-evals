@@ -1,7 +1,7 @@
 import * as v from 'valibot';
 import { HealthSchema } from '../src/evals/schemas.ts';
 import { errorMessage } from '../src/json.ts';
-import { spawn } from 'node:child_process';
+import { runNode } from './run-node.ts';
 import { randomUUID } from 'node:crypto';
 import { mkdir, writeFile, copyFile, rm } from 'node:fs/promises';
 import { loadEnv, localBaseUrl } from '../src/config.ts';
@@ -20,14 +20,16 @@ try {
     args.find((a) => a.startsWith('--cases='))?.slice(8) ??
     (args.includes('--all') ? undefined : 'new-search,true-duplicate,missing-observation');
   const selected = selectCases(ids);
-  const health = await fetch(`${localBaseUrl()}/health`, { signal: AbortSignal.timeout(3000) })
-    .then((r) => {
-      if (!r.ok) throw new Error('Server health check failed.');
-      return r.json().then((value: unknown) => v.parse(HealthSchema, value));
-    })
-    .catch(() => {
-      throw new Error('Start the local Flue app with npm run dev in another terminal.');
-    });
+  const response = await fetch(`${localBaseUrl()}/health`, {
+    signal: AbortSignal.timeout(3000),
+  }).catch((cause: unknown) => {
+    throw new Error(
+      `Cannot reach the local Flue app: ${errorMessage(cause)}. Start it with npm run dev in another terminal.`,
+      { cause },
+    );
+  });
+  if (!response.ok) throw new Error(`Server health check returned HTTP ${response.status}.`);
+  const health = v.parse(HealthSchema, await response.json());
   if (!health.credentialsConfigured)
     throw new Error('The app needs OPENROUTER_API_KEY in .dev.vars.');
   const runId = `run-${randomUUID()}`;
@@ -52,33 +54,24 @@ try {
   console.log(
     `${selected.length * count} independent live trials; ${selected.reduce((n, c) => n + c.turns.length * count, 0)} user turns. Each turn may make several model calls. No judge calls in this suite. No assertion retries.`,
   );
-  const child = spawn(
-    process.execPath,
+  const code = await runNode(
     ['node_modules/vitest/vitest.mjs', 'run', '--config', 'vitest.evals.config.ts'],
     {
-      stdio: 'inherit',
-      env: {
-        ...process.env,
-        FAFO_CASES: selected.map((c) => c.id).join(','),
-        FAFO_REPETITIONS: String(count),
-        FAFO_RUN_ID: runId,
-      },
+      ...process.env,
+      FAFO_CASES: selected.map((c) => c.id).join(','),
+      FAFO_REPETITIONS: String(count),
+      FAFO_RUN_ID: runId,
     },
   );
-  for (const signal of ['SIGINT', 'SIGTERM'] as const) process.on(signal, () => child.kill(signal));
-  child.on('exit', async (code) => {
-    try {
-      await copyFile(
-        'artifacts/vitest-results.json',
-        `artifacts/runs/${runId}/vitest-results.json`,
-      );
-    } catch {
-      console.error(
-        `Run ${runId} did not produce a complete Vitest report; inspect partial trial artifacts.`,
-      );
-    }
-    process.exitCode = code ?? 1;
-  });
+  process.exitCode = code;
+  try {
+    await copyFile('artifacts/vitest-results.json', `artifacts/runs/${runId}/vitest-results.json`);
+  } catch (cause) {
+    // A green child exit is insufficient when the evidence could not be retained.
+    console.error(`Run ${runId} could not archive its Vitest report: ${errorMessage(cause)}.`);
+    console.error('Inspect partial trial artifacts.');
+    process.exitCode = code || 1;
+  }
 } catch (error) {
   console.error(errorMessage(error));
   process.exitCode = 1;

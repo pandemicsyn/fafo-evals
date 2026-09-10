@@ -2,7 +2,8 @@ import { createAgentRouter } from '@flue/runtime/routing';
 import { Hono } from 'hono';
 import * as v from 'valibot';
 import { Triage } from './agents/triage.ts';
-import { fixtures } from './fixtures.ts';
+import { FixtureSchema } from './fixtures.ts';
+import { JsonValueSchema } from './json.ts';
 import { allocateTrial, closeTrial, trackerFor } from './trials.ts';
 import { modelId } from './config.ts';
 import { POLICY_VERSION } from './policy.ts';
@@ -34,9 +35,7 @@ app.get('/health', (c) =>
   }),
 );
 const TrialInput = v.object({
-  fixture: v.picklist(
-    Object.keys(fixtures) as [keyof typeof fixtures, ...Array<keyof typeof fixtures>],
-  ),
+  fixture: FixtureSchema,
   fault: v.optional(v.picklist(['none', 'no-write', 'wrong-target', 'search-error']), 'none'),
 });
 app.post('/__eval/trials', async (c) => {
@@ -59,7 +58,7 @@ app.use('/agents/triage/*', async (c, next) => {
   if (sending && !process.env.OPENROUTER_API_KEY?.trim())
     return c.json({ error: 'Missing OPENROUTER_API_KEY. Offline lessons: npm run examples.' }, 503);
   if (sending) {
-    const body = v.parse(v.record(v.string(), v.unknown()), await c.req.raw.json());
+    const body = v.parse(v.record(v.string(), JsonValueSchema), await c.req.raw.json());
     c.req.raw = new Request(c.req.url, {
       method: 'POST',
       headers: c.req.raw.headers,

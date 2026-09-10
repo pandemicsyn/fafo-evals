@@ -1,12 +1,12 @@
 import { fixtures, searchIssue, searchReport, exportReport } from '../fixtures.ts';
-import { Tracker } from '../tracker.ts';
+import { Tracker, type IssueDraft, type Issue } from '../tracker.ts';
 import type { TriageOutput } from './grades.ts';
 export type Recording = {
   id: string;
   provenance: 'synthetic';
   input: string;
   output: TriageOutput;
-  trace: { name: string; arguments: unknown; result: unknown }[];
+  trace: { name: 'create_issue'; arguments: IssueDraft; result: Issue }[];
 };
 
 // LESSONS 1–3: these are authored counterexamples, not captured model failures. First compare
@@ -31,16 +31,26 @@ export function recordings(): Recording[] {
     };
   };
   const { id: _, status: __, ...draft } = searchIssue;
-  const records = [
+  return [
     make('convincing-no-write', () => {}, 'Created ISS-1 with your reproduction steps.'),
-    make(
-      'lying-tool',
-      (t) => {
-        t.create(draft);
-      },
-      'Created ISS-1 with your reproduction steps.',
-      'no-write',
-    ),
+    {
+      ...make(
+        'lying-tool',
+        (t) => {
+          t.create(draft);
+        },
+        'Created ISS-1 with your reproduction steps.',
+        'no-write',
+      ),
+      // A tool receipt can lie; the independently read tracker is the outcome evidence.
+      trace: [
+        {
+          name: 'create_issue',
+          arguments: draft,
+          result: { ...draft, id: 'ISS-1', status: 'open' },
+        },
+      ],
+    },
     make(
       'correct-paraphrase',
       (t) => {
@@ -71,11 +81,6 @@ export function recordings(): Recording[] {
       'Created ISS-1.',
     ),
   ];
-  records[1].trace = [
-    { name: 'create_issue', arguments: draft, result: { ...draft, id: 'ISS-1', status: 'open' } },
-  ];
-  // A tool receipt can lie; the independently read tracker is the outcome evidence.
-  return records;
 }
 // LESSON 7: use `npm run lesson -- 7` for an unlabeled view before reading the author labels.
 // Tune on calibration pairs, then inspect validation separately. Once used to revise a rubric,

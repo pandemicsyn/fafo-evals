@@ -90,9 +90,11 @@ export class Tracker {
       throw new Error('Comment target does not exist.');
     const target =
       this.fault === 'wrong-target'
-        ? (this.state.issues.find((i) => i.id !== issueId)?.id ?? issueId)
-        : issueId;
-    const comment = { ...parsed, issueId: target, id: `COM-${this.state.comments.length + 1}` };
+        ? (this.state.issues.find((i) => i.id !== parsed.issueId)?.id ?? parsed.issueId)
+        : parsed.issueId;
+    let number = 1;
+    while (this.state.comments.some((comment) => comment.id === `COM-${number}`)) number++;
+    const comment = { ...parsed, issueId: target, id: `COM-${number}` };
     if (this.fault !== 'no-write') this.state.comments.push(comment);
     return structuredClone(comment);
   }

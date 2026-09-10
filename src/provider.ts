@@ -24,12 +24,12 @@ export function courseProvider() {
   return {
     ...provider,
     getModels: () => [...provider.getModels().filter((m) => m.id !== flash.id), flash],
-    streamSimple: ((model, context, options) =>
+    streamSimple: (model, context, options) =>
       provider.streamSimple(model, context, {
         ...options,
         maxTokens: Math.min(options?.maxTokens ?? 4096, 4096),
-      })) as typeof provider.streamSimple,
-  };
+      }),
+  } satisfies typeof provider;
 }
 export function registerCourseProvider() {
   setProvider(courseProvider());

@@ -73,8 +73,11 @@ it('isolation challenge accepts per-store trial state and rejects both sharing a
     checkIsolation((seed) => {
       const trackers = new Map<string, Tracker>();
       return (id) => {
-        if (!trackers.has(id)) trackers.set(id, new Tracker(seed));
-        return trackers.get(id)!;
+        const existing = trackers.get(id);
+        if (existing) return existing;
+        const tracker = new Tracker(seed);
+        trackers.set(id, tracker);
+        return tracker;
       };
     }).filter((r) => !r.passed),
   ).toEqual([]);

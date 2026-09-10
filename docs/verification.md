@@ -1,6 +1,6 @@
 # Verification notes
 
-Checked September 9, 2026 (America/Chicago). These are implementation smoke tests, not a representative benchmark or a claim of dependable autonomous triage.
+Live observations checked September 9, 2026; engineering checks updated September 10 (America/Chicago). These are implementation smoke tests, not a representative benchmark or a claim of dependable autonomous triage.
 
 ## Live observations
 
@@ -29,10 +29,11 @@ Default decision: free Nemotron for the application so the initial live lessons 
 ## Engineering checks
 
 - Clean `npm ci` succeeded in the user-provided checkout.
-- Final `npm run verify` passed under Node 22.20.0 and Node 26.4.0: Oxfmt, type-aware Oxlint, TypeScript, all 26 deterministic tests across nine files, and the Flue Node build. Lint rules reject explicit `any` and unsafe inferred flows; Valibot validates JSON boundaries.
+- Final `npm run verify` passed under Node 22.20.0 and Node 26.4.0: Oxfmt, type-aware Oxlint, TypeScript, all 33 deterministic tests across ten files, and the Flue Node build. Lint rules reject explicit `any`, unsafe inferred flows, non-null assertions, unnecessary type assertions, accumulating spreads, and mishandled promises; Valibot validates JSON boundaries.
 - Deterministic tests exercise real Flue/SDK HTTP calls using a scripted provider, independent and overlapping namespaces, multi-turn continuity, timeout cleanup, malformed tool input, bad/valid grader examples, judge errors/evidence validation, and report denominators.
 - Offline examples and all four intentionally failing starters (lessons 3, 5, 6, 9) execute without credentials. Reference solutions pass their checkers; the checkers reject meaningful shortcuts.
 - Independent Astra static review identified JSON typing, missing comparison rows, interrupted archive handling, and cleanup error precedence. These were fixed with regression coverage; the bounded second pass found no material remaining defects.
+- A subsequent [TypeScript review](../.plans/typescript-review.md) tightened known types and fixed archival exit status, normalized comment targets, and seeded comment-ID collisions. Independent re-review of the fixes reported no actionable issues remaining before commit.
 - The report viewer loaded all 11 live cases; the count report retained the failed case and showed zero missing artifacts.
 - The `skills` installer discovered and installed `learn-evals` into an isolated project for Codex. Skill frontmatter validation passed. Global agent configuration was not changed.
 - `.dev.vars` and `.dev.vars.*` are ignored, with `.dev.vars.example` explicitly included. The maintainer's key was loaded from outside the repository for live checks, never copied into source or examples.

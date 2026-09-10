@@ -51,7 +51,10 @@ export function checkTrajectory(grade: (trial: DuplicateTrial) => boolean): Chal
   const read = tool('r', 'get_issue', { id: target });
   const write = tool('w', 'add_comment', { issueId: target, body: 'Same report.' });
   const wrongState = structuredClone(output);
-  wrongState.after.comments.at(-1)!.issueId = other;
+  wrongState.after.comments = wrongState.after.comments.map((comment) => ({
+    ...comment,
+    issueId: other,
+  }));
   const scenarios: {
     id: string;
     events: TranscriptEvent[];

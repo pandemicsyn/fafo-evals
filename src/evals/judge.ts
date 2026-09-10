@@ -36,6 +36,13 @@ export const VerdictSchema = v.object({
 });
 export type Verdict = v.InferOutput<typeof VerdictSchema>;
 export type JudgePair = { report: string; issue: string };
+export type JudgeResponseMetadata = {
+  model: string;
+  usage: v.InferOutput<typeof JudgeResponseSchema>['usage'] | null;
+  responseId: string | null;
+  provider: string | null;
+  raw: string | null;
+};
 export function parseVerdict(value: unknown, pair: JudgePair): Verdict {
   const verdict = v.parse(VerdictSchema, value);
   // Real quotes make a verdict auditable, not necessarily correct. Human calibration still matters.
@@ -44,7 +51,7 @@ export function parseVerdict(value: unknown, pair: JudgePair): Verdict {
   return verdict;
 }
 export function openRouterJudgeHarness(
-  options: { fetch?: typeof fetch; onResponse?: (metadata: unknown) => void } = {},
+  options: { fetch?: typeof fetch; onResponse?: (metadata: JudgeResponseMetadata) => void } = {},
 ) {
   return createJudgeHarness({
     name: 'openrouter-reproduction-judge',

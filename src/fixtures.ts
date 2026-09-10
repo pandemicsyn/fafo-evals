@@ -1,4 +1,13 @@
 import type { Issue, Snapshot } from './tracker.ts';
+import * as v from 'valibot';
+
+export const FixtureSchema = v.picklist([
+  'clear-new-report',
+  'existing-issues',
+  'closed-duplicate',
+  'similar-title',
+]);
+export type Fixture = v.InferOutput<typeof FixtureSchema>;
 
 export const searchIssue: Issue = {
   id: 'ISS-10',
@@ -32,8 +41,7 @@ export const fixtures = {
     ],
     comments: [],
   },
-} satisfies Record<string, Snapshot>;
-export type Fixture = keyof typeof fixtures;
+} satisfies Record<Fixture, Snapshot>;
 export const searchReport =
   'In the issue list, type a word into search and press Escape. Expected: search clears and all issues return. Actual: the input clears, but the list stays filtered until I refresh.';
 export const exportReport =
