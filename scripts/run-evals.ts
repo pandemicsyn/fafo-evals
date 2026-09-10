@@ -1,10 +1,9 @@
-import * as v from 'valibot';
-import { HealthSchema } from '../src/evals/schemas.ts';
 import { errorMessage } from '../src/json.ts';
+import { checkHealth } from './check-health.ts';
 import { runNode } from './run-node.ts';
 import { randomUUID } from 'node:crypto';
 import { mkdir, writeFile, copyFile, rm } from 'node:fs/promises';
-import { loadEnv, localBaseUrl } from '../src/config.ts';
+import { loadEnv } from '../src/config.ts';
 import { selectCases } from '../src/evals/cases.ts';
 loadEnv();
 try {
@@ -20,18 +19,7 @@ try {
     args.find((a) => a.startsWith('--cases='))?.slice(8) ??
     (args.includes('--all') ? undefined : 'new-search,true-duplicate,missing-observation');
   const selected = selectCases(ids);
-  const response = await fetch(`${localBaseUrl()}/health`, {
-    signal: AbortSignal.timeout(3000),
-  }).catch((cause: unknown) => {
-    throw new Error(
-      `Cannot reach the local Flue app: ${errorMessage(cause)}. Start it with npm run dev in another terminal.`,
-      { cause },
-    );
-  });
-  if (!response.ok) throw new Error(`Server health check returned HTTP ${response.status}.`);
-  const health = v.parse(HealthSchema, await response.json());
-  if (!health.credentialsConfigured)
-    throw new Error('The app needs OPENROUTER_API_KEY in .dev.vars.');
+  const health = await checkHealth();
   const runId = `run-${randomUUID()}`;
   await mkdir(`artifacts/runs/${runId}`, { recursive: true });
   await rm('artifacts/vitest-results.json', { force: true });
