@@ -1,0 +1,55 @@
+{
+  "name": "fafo-evals",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Learn evals via fafo aka breaking things",
+  "license": "Apache-2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node --import tsx scripts/dev.ts",
+    "build": "vite build",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "examples": "node --import tsx scripts/examples.ts",
+    "lesson": "node --import tsx scripts/lesson.ts",
+    "evals": "node --import tsx scripts/run-evals.ts",
+    "evals:repeat": "node --import tsx scripts/run-evals.ts --repeat=5",
+    "evals:judge": "node --import tsx scripts/run-judge.ts",
+    "evals:report": "vitest-evals serve artifacts/vitest-results.json",
+    "report": "node --import tsx scripts/report.ts",
+    "lint": "oxlint --type-aware --deny-warnings",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check",
+    "verify": "npm run format:check && npm run lint && npm run check && npm test && npm run build",
+    "models": "node --import tsx scripts/models.ts",
+    "compare": "node --import tsx scripts/compare.ts"
+  },
+  "dependencies": {
+    "@earendil-works/pi-ai": "0.83.0",
+    "@flue/runtime": "2.0.4",
+    "@flue/sdk": "2.0.4",
+    "hono": "4.13.7",
+    "valibot": "1.5.0"
+  },
+  "devDependencies": {
+    "@flue/vite": "2.0.4",
+    "@hono/node-server": "2.1.1",
+    "@types/node": "22.20.2",
+    "oxfmt": "0.67.0",
+    "oxlint": "1.82.0",
+    "oxlint-tsgolint": "7.0.2001",
+    "tsx": "4.23.13",
+    "typescript": "5.9.3",
+    "vite": "8.2.2",
+    "vitest": "4.1.11",
+    "vitest-evals": "0.16.1"
+  },
+  "overrides": {
+    "@flue/vite": {
+      "@flue/runtime": "2.0.4"
+    }
+  },
+  "engines": {
+    "node": ">=22.19.0"
+  }
+}

@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.flue/
+.env
+.env.*
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+artifacts/
+.learn-evals/
+*.log
+.DS_Store
