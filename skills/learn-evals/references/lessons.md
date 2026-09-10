@@ -6,13 +6,15 @@ The local issue-triage agent searches a fictional tracker, asks for missing repo
 
 ## 1 — What would convince you?
 
-No checkout needed: a user reports that pressing Escape clears issue-search text but leaves the list filtered. The agent replies, “Created ISS-1 with your reproduction steps.” The tracker contained zero issues before and zero after. This is a **synthetic teaching example**, not a captured model run.
+From the companion checkout, run `npm run examples`. Explain first that this prints prepared JSON in the terminal: no model runs, no real issue is created, and there is no code to repair in this lesson. Without a checkout, show the same evidence below and discuss it; setup can wait.
 
-Predict: did the task succeed? What would you inspect next?
+The input reports that pressing Escape clears issue-search text but leaves the list filtered. What you expected: one new issue about issue search containing the user's reproduction steps. Ask the learner where they would look to check that it was stored.
 
-Run `npm run examples` when the checkout is available. Inspect `output.before`, `output.after`, and `trace`. Explain how a credible answer can hide missing work. Then compare `npm run examples -- lying-tool`: even a successful-looking tool receipt can disagree with state.
+Focus on three printed fields: `output.reply` says “Created ISS-1 with your reproduction steps.” Both `output.before.issues` and `output.after.issues` are `[]`, meaning no stored issues. Have the learner describe what they got: a confirmation message but no issue. A successful write would put a new issue object in the after list. These are synthetic examples, not captured model failures.
 
-Completion: the learner names independent state evidence and distinguishes a claimed write from an actual write.
+Then run `npm run examples -- lying-tool`. Have the learner compare `trace[0].result`, which contains an issue object with `id: "ISS-1"`, with the still-empty `output.after.issues`. The receipt claims a write that the tracker doesn't contain. With no checkout, describe these two pieces of evidence instead.
+
+Completion: for both examples, point to the success claim and the state evidence contradicting it. Explain why a reply or tool receipt is insufficient. Introduce the case/trial/harness/transcript/grader/outcome terms after inspecting the evidence. Save preservation of existing records for the seeded-state checks later; this tracker starts empty.
 
 ## 2 — Error analysis before a score
 
