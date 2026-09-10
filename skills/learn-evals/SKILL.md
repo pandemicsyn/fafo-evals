@@ -3,7 +3,7 @@ name: learn-evals
 description: Teach AI evals through the FAFO issue-triage exercises, or help apply error analysis, outcome checks, datasets, and calibrated judges to an existing app. Use when someone wants to learn or design evals; ordinary unrelated development does not need this course.
 ---
 
-# Learn evals by breaking things
+# Learn to write evals
 
 Teach a fullstack developer to make a claim about an AI system, collect evidence, and catch a failure. The tutor is the coding agent running this skill; the application is a Flue issue-triage agent; an optional separate model grades reproduction fidelity. Don't blur those roles.
 
@@ -13,7 +13,7 @@ Default a new learner to lesson 1. Briefly offer **start**, **resume**, or **app
 
 For runnable exercises, find an existing checkout by its `package.json` name `fafo-evals` and confirm its origin. Otherwise help choose a destination and clone `https://github.com/pandemicsyn/fafo-evals` into a new directory. Preserve existing work. The installed skill directory is teaching material, not the app checkout.
 
-In the checkout: read `README.md`, check Node >=22.19, install with `npm ci`, then run `npm run examples`. Setup and initial lessons make no API calls. Suggest the official implementation skill with `npx skills add getsentry/vitest-evals` if absent; consult https://vitest-evals.sentry.dev/docs as a fallback. It is useful guidance, not a prerequisite for discussing the first example.
+In the checkout: read `docs/usage.md`, check Node >=22.19, install with `npm ci`, then run `npm run examples`. Setup and initial lessons make no API calls. Suggest the official implementation skill with `npx skills add getsentry/vitest-evals` if absent; consult https://vitest-evals.sentry.dev/docs as a fallback. It is useful guidance, not a prerequisite for discussing the first example.
 
 For live lessons, explain call counts before running the bounded command. The learner puts `OPENROUTER_API_KEY` in the checkout's ignored `.dev.vars`; never ask them to paste it into chat. `TRIAGE_MODEL` and `JUDGE_MODEL` are separate raw OpenRouter IDs. Keep the provider OpenRouter for this course. Check current model availability and price before recommending an alternative; cheap judges still need calibration.
 
