@@ -149,7 +149,10 @@ export function createTriageHarness(options: {
         schemaVersion: 1,
         trialId: id,
         experimentId: process.env.FAFO_RUN_ID ?? null,
-        evidence: options.evidence ?? 'live',
+        // The article smoke test executes the unchanged example with a scripted provider.
+        evidence:
+          options.evidence ??
+          (process.env.FAFO_SCRIPTED_PROVIDER === '1' ? 'scripted-provider' : 'live'),
         fixture: options.fixture,
         fixtureVersion: 1,
         fault: options.fault ?? 'none',

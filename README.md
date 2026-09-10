@@ -87,6 +87,7 @@ An inexpensive upgrade candidate is [GLM 5.3 Flash](https://openrouter.ai/z-ai/g
 | `npm run lesson -- 1` through `10`                         | Print a lesson; 3/5/6/9 check exercises, 7/8 show examples           |
 | `npm run lesson -- 7 --validation`                         | Show the separate validation pairs without reference labels          |
 | `npm run evals -- --cases=true-duplicate,similar-title`    | Run selected live cases                                              |
+| `npm run evals:article`                                    | Run the exact article example as one live trial                      |
 | `npm run evals -- --all`                                   | Run all teaching cases, excluding reserved examples                  |
 | `npm run evals:repeat -- --cases=new-search`               | Five independent trials; retain every result                         |
 | `npm run evals:judge`                                      | Grade three fixed synthetic outputs against reference author labels  |
@@ -104,6 +105,8 @@ Lesson 7 prints pairs with neutral IDs and no reference labels. Save your own ju
 The shipped judge rubric is v2. Historical Nemotron/v1 failures illustrate earlier behavior; reproducing them is not required. Revise the current rubric only when new evidence justifies it. Both supplied splits were inspected during development and are practice data. For a fresh quality estimate, author new examples. If resuming an older checkout, preserve old label files and map their IDs to the unchanged pairs; renamed IDs do not make previously seen examples unseen.
 
 Each live trial saves input, transcript, tool events, independent before/after and per-turn snapshots, runtime usage metadata, revisions, timing, and errors under `artifacts/trials/`. Run summaries and Vitest JSON are archived under `artifacts/runs/`; the local UI opens the latest result. These artifacts and learner progress are ignored by Git. Provider catalog cost estimates are not bills; unknown cost stays `null`.
+
+With the app running, `npm run evals:article` executes `examples/article-example.ts` as one live trial (potentially several model calls). Its Vitest report goes to `artifacts/article-results.json`, separate from the main suite's report and comparison archives. `npm test` executes that same file with a scripted provider, real local HTTP calls, and no model API calls; those trial artifacts are marked `scripted-provider`.
 
 ## What the agent is supposed to do
 

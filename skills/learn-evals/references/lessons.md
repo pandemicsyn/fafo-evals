@@ -78,6 +78,8 @@ Completion: explain a disagreement with quoted evidence, or challenge the judge 
 
 For live trials, start `npm run dev` after configuring `.dev.vars`, then run `npm run evals -- --cases=new-search` in another terminal. Inspect `npm run report`, `npm run evals:report`, and the minimal harness example in `examples/article-example.ts`: the harness sends the report, waits for completion, and captures the transcript and independent snapshots for assertions.
 
+To execute that exact example, use `npm run evals:article` with the app running. It runs one live trial and writes `artifacts/article-results.json`, separate from the main suite and its comparisons. Ordinary `npm test` executes the same file using a scripted provider without model API calls.
+
 Then run `npm run evals:repeat -- --cases=new-search`. This records five independent trials with no assertion retries. The app can make multiple model calls per trial; inspect the printed budget first. To stay offline, run `npm run lesson -- 8` for a labeled synthetic variation demonstration.
 
 Optional conversation transfer: with the app running, use `npm run evals -- --cases=clarify-then-create,still-incomplete` and inspect `beforeFinal` and `output.turns` to connect lesson 6 to live per-turn snapshots.
