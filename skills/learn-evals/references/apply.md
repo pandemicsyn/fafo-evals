@@ -12,4 +12,6 @@ Inspect the real entrypoint and a few recent failures/traces. Ask what user outc
 
 Consult the installed official vitest-evals skill or current primary documentation for API mechanics if that tool fits. The transferable lesson is the evidence loop, not the Flue fixture schema. Don't force vitest-evals onto a Python app just because this course used TypeScript.
 
+Explain the purpose separately from the grader: capability evals test new behavior, regression evals protect existing behavior, and offline comparisons compare revisions under controlled conditions. Production monitoring looks for failures in real use; shadow evaluation runs a candidate on live inputs with writes disabled; online A/B tests compare real outcomes with randomized assignment. The companion implements the first three. The others require production inputs and additional infrastructure, not another lesson deployment exercise.
+
 Useful sources: [Anthropic's agent evals](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents), [Hamel and Shreya's FAQ](https://hamel.dev/blog/posts/evals-faq/), and [vitest-evals](https://vitest-evals.sentry.dev/docs).

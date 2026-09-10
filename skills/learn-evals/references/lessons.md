@@ -2,6 +2,8 @@
 
 Teach one lesson at a time. A task is a case; a trial is one execution; the harness runs it and gathers evidence; graders decide whether named criteria hold. The transcript shows what happened along the way. The outcome is the actual resulting state. These concepts travel to larger eval frameworks.
 
+The local issue-triage agent searches a fictional tracker, asks for missing report facts, and creates one issue or comments once on an open duplicate. It must search before writing, read candidate details before deciding they're duplicates, and explain a search failure without writing. Preserve existing records and the user's facts. No GitHub connection or deployment is needed.
+
 ## 1 — What would convince you?
 
 No checkout needed: a user reports that pressing Escape clears issue-search text but leaves the list filtered. The agent replies, “Created ISS-1 with your reproduction steps.” The tracker contained zero issues before and zero after. This is a **synthetic teaching example**, not a captured model run.
@@ -54,7 +56,7 @@ The starter grades only the final state. Predict why a premature first-turn writ
 
 Completion: accept delayed creation and continued clarification; reject early issues/comments, interim damage to old records, missing observations, and wrong final outcomes. Pass the checker and explain one pair with the same ending but different grades. Hint: reuse `gradeOutcome` for each earlier turn with the clarification expectation. Question relevance still needs human review.
 
-Optional live transfer: start `npm run dev`, then run `npm run evals -- --cases=clarify-then-create,still-incomplete`. Inspect `beforeFinal` and `output.turns`. The app already uses independent per-turn snapshots; editing the exercise does not alter its live grader.
+Keep this lesson offline. Revisit the conversation cases after model setup in lessons 7–8; editing the exercise does not alter the app's live grader.
 
 ## 7 — Give the judge one job
 
@@ -62,13 +64,17 @@ Run `npm run lesson -- 7` to see unlabeled calibration pairs. Label each in `.le
 
 For model calls, copy `.dev.vars.example` to the ignored `.dev.vars` file and add the OpenRouter key there. Then run `npm run evals:judge -- --labels=.learn-evals/labels.json`; the judge does not need the app server. This uses the separate OpenRouter judge model against fixed synthetic outputs. Without your file it compares against reference author labels; don't describe those as learner annotations. The tutor must not send human labels or expected verdicts to the judge.
 
-Inspect false accepts and false rejects, not agreement alone. Try `--repeat=3` on the same outputs to expose judge variance. Revise the rubric after inspecting disagreements, then run `npm run evals:judge -- --validation` on the separate batch. A few examples demonstrate calibration, not readiness to gate production.
+Inspect false accepts and false rejects, not agreement alone. Run `npm run examples -- judge-disagreement` for the captured failure where a judge accepted an invented Redux diagnosis. Try `--repeat=3` on the same outputs to expose judge variance. Revise the rubric after inspecting disagreements, then run `npm run evals:judge -- --validation` on the separate batch. Once that batch informs a rubric revision, it is development data; use fresh examples for another independent check. A few examples demonstrate calibration, not readiness to gate production.
 
-Completion: explain one disagreement with quoted evidence and keep API/parse errors out of pass/fail counts. Hint: the polished issue that omits “zero matches” is the dangerous kind of failure.
+Completion: explain one disagreement with quoted evidence, or challenge the judge with a new borderline pair if it agrees on everything. Keep API/parse errors out of semantic pass/fail counts. No required issue means the quality criterion is inapplicable; a missing required issue is a failed outcome. Hint: the polished issue that omits “zero matches” is the dangerous kind of failure.
 
 ## 8 — Run it again
 
-Run `npm run lesson -- 8` for a labeled synthetic variation demonstration. For live repetitions, start `npm run dev` after configuring `.dev.vars`, then run `npm run evals:repeat -- --cases=new-search` in another terminal. This records five independent trials with no assertion retries. The app can make multiple model calls per trial; inspect the printed budget first.
+For live trials, start `npm run dev` after configuring `.dev.vars`, then run `npm run evals -- --cases=new-search` in another terminal. Inspect `npm run report`, `npm run evals:report`, and the minimal harness example in `examples/article-example.ts`: the harness sends the report, waits for completion, and captures the transcript and independent snapshots for assertions.
+
+Then run `npm run evals:repeat -- --cases=new-search`. This records five independent trials with no assertion retries. The app can make multiple model calls per trial; inspect the printed budget first. To stay offline, run `npm run lesson -- 8` for a labeled synthetic variation demonstration.
+
+Optional conversation transfer: with the app running, use `npm run evals -- --cases=clarify-then-create,still-incomplete` and inspect `beforeFinal` and `output.turns` to connect lesson 6 to live per-turn snapshots.
 
 Predict whether one pass means dependable behavior. Preserve all attempts. `pass@k` asks whether at least one of k attempts succeeds; `pass^k` asks whether all succeed. Don't compute these from a pooled success rate across unrelated tasks or assume independent trials without justification.
 
@@ -86,7 +92,7 @@ Then compare with the application's working `src/trials.ts` and inspect timeout/
 
 ## 10 — Make a decision and transfer it
 
-Run a focused suite with `npm run evals -- --cases=new-search,true-duplicate`; inspect `npm run report` and `npm run evals:report`. Trial JSON files preserve snapshots and metadata. Change one prompt behavior in `src/policy.ts`, restart the application, and run the same cases/settings again. Reports are archived automatically; `npm run compare` compares the latest two readable archives, shows missing evidence, and refuses an empty comparison. Explicit run IDs let you select another pair. Keep failures as regression cases.
+Run `npm run evals -- --cases=new-search,true-duplicate,similar-title --repeat=3`; inspect `npm run report` and `npm run evals:report`. Keep the similar-but-different bug in the comparison: improving duplicate detection can also cause incorrect merging. Trial JSON files preserve snapshots and metadata. Change one prompt behavior in `src/policy.ts`, restart the application, and run the same command with models and graders fixed. Reports are archived automatically; `npm run compare` compares the latest two readable archives, shows missing evidence, and refuses an empty comparison. Explicit run IDs let you select another pair. If an expectation was wrong, correct it and rerun both revisions against that criterion. Keep failures as regression cases.
 
 Explain what improved, what regressed, what remains uncertain, and what it cost (unknown cost is not zero). Check correctness before optimizing latency. Test a novel case authored by the learner before looking at reserved examples. Report slices: creating, duplicate handling, clarification, conversation, tool errors, instruction boundary.
 
