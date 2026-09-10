@@ -10,7 +10,7 @@ Repository: https://github.com/pandemicsyn/fafo-evals
 
 Implementation checkout: `/Users/pandemicsyn/projects/neonronin/fafo-evals`.
 
-Initial checkout baseline: clean working tree, `origin` points to the repository above, and the only working-tree file is `LICENSE` (MIT, copyright 2026 Florian Hines). At that time no runnable application, package manifest, README, or skill existed; these are now implemented. The repository and bundled skill have since switched to Apache 2.0 at the owner’s request.
+Initial checkout baseline: clean working tree, `origin` points to the repository above, and the only working-tree file is `LICENSE` (MIT). At that time no runnable application, package manifest, README, or skill existed; these are now implemented. The repository and bundled skill have since switched to Apache 2.0 at the owner’s request.
 
 Draft post: `src/content/blog/learn-evals-by-breaking-things.md` in this repository.
 
@@ -268,7 +268,7 @@ Compare **official skill alone** against **official skill plus learn-evals** und
 - [ ] Retain the verified `pandemicsyn/fafo-evals` clone URL; complete and test setup and both skill installation instructions before removing the draft note.
 - [ ] Replace or explicitly retain illustrative report tables as illustrative; never present invented results as measurements.
 - [ ] Confirm no refund scenario or deployment exercise remains.
-- [x] Use Apache 2.0 for the repository and bundled skill, retain the copyright notice, and preserve required attribution for reused code. Write original prose and examples; cite concepts at the relevant claims. Do not copy entire source articles into skill references.
+- [x] Use Apache 2.0 for the repository and bundled skill. Omit custom copyright notices at the owner's request. Write original prose and examples; cite concepts at the relevant claims. Do not copy entire source articles into skill references.
 - [ ] Verify links and rendered tables/code blocks. Ensure drafts remain excluded from production pages, feeds, and sitemap until publication.
 - [ ] Record companion version/commit used to verify the post, supported runtime versions, known limitations, and measured setup observations.
 
