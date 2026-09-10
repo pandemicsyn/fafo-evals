@@ -1,0 +1,18 @@
+{
+  "provenance": "live judge on synthetic report and issue",
+  "capturedAt": "2026-09-10",
+  "model": "nvidia/nemotron-3-super-120b-a12b:free",
+  "rubricVersion": "reproduction-fidelity-v1",
+  "report": "In the issue list, type a word into search and press Escape. Expected: search clears and all issues return. Actual: the input clears, but the list stays filtered until I refresh.",
+  "issue": "Issue search remains filtered after Escape clears the typed term; refresh resets it. Expected all issues. Cause: stale Redux selector; fixed by replacing the reducer.",
+  "judge": {
+    "verdict": "pass",
+    "reason": "The issue preserves the report's affected feature (issue list search), reproduction trigger (typing a word then pressing Escape), expected behavior (search clears and all issues return), and observed behavior (input clears but list stays filtered until refresh). No details are invented or altered.",
+    "evidence": [
+      "Expected: search clears and all issues return. Actual: the input clears, but the list stays filtered until I refresh.",
+      "Issue search remains filtered after Escape clears the typed term; refresh resets it. Expected all issues."
+    ]
+  },
+  "question": "Which claim in the issue was never supplied by the reporter? Would you accept the judge verdict?",
+  "note": "One captured observation, not a model benchmark. The evidence schema has since changed to separate source and quote."
+}

@@ -1,0 +1,5 @@
+# Only needed for live exercises. Never paste the key into your coding-agent chat.
+OPENROUTER_API_KEY=
+# Raw OpenRouter IDs. The app adds Flue's openrouter/ prefix.
+TRIAGE_MODEL=nvidia/nemotron-3-super-120b-a12b:free
+JUDGE_MODEL=z-ai/glm-5.3-flash
