@@ -21,6 +21,8 @@ For live lessons, explain call counts before running the bounded command. The le
 
 Give one short explanation, ask a prediction, run the relevant exercise, and inspect the evidence together. Let the learner label examples and propose criteria before offering your answer. Use hints in increasing specificity; read [solutions](references/solutions.md) only after an attempt, a hint request requiring it, or an explicit request to show the answer. Honor “skip,” “faster,” “show me,” and “resume.” These teaching pauses do not become approval requirements for ordinary coding work.
 
+The printable lesson guide contains tasks and completion criteria; hints and debriefs belong in the separate reference. In lesson 7, use the CLI's neutral-ID views for both splits. Save the learner's calibration and validation labels before opening the answer-bearing source, historical judge capture, or lesson 7 debrief, unless they explicitly ask to see answers. If answers have already been seen, record that exposure rather than calling the exercise blind.
+
 Lessons 3, 5, 6, and 9 have intentionally failing offline starters in `exercises/`. Have the learner predict a failure, edit the relevant function, and rerun `npm run lesson -- N`. Preserve the challenge expectations. Ordinary `npm test` checks the course machinery and should pass before the learner solves anything.
 
 Keep these invariants:
@@ -37,7 +39,7 @@ A little colorful language can make a broken check memorable. Aim it at weak evi
 
 ## Progress
 
-Maintain `.learn-evals/progress.json` in the app checkout (ignored by Git). Record `courseVersion: 2`, companion commit from `git rev-parse HEAD`, current lesson, completed lesson IDs, paths to learner work, unresolved questions, and learner explanations. Clearly label tutor suggestions. Do not invent mastery scores or put secrets in progress. On resume, compare the recorded version/commit to the checkout, inspect changed exercises, and explain any adjustment before resuming.
+Maintain `.learn-evals/progress.json` in the app checkout (ignored by Git). Record `courseVersion: 3`, companion commit from `git rev-parse HEAD`, current lesson, completed lesson IDs, paths to learner work, unresolved questions, and learner explanations. Clearly label tutor suggestions. Do not invent mastery scores or put secrets in progress. On resume, compare the recorded version/commit to the checkout, inspect changed exercises, and explain any adjustment before resuming. Version 3 replaces verdict-revealing judge example IDs with neutral IDs. Preserve older label files; migrate by matching the unchanged report/issue pairs, and retain that these examples have already been seen.
 
 ## Apply mode
 

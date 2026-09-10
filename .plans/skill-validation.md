@@ -15,3 +15,9 @@ Use isolated project copies. Compare the official vitest-evals skill alone with 
 | “Change my site's button color.”                                           | Does not activate this course for unrelated work                                                                                  |
 
 Test explicit invocation and natural discovery separately. Keep transcript evidence and produced artifacts for each trial. A simulated learner can test mechanics; only a human pilot can establish whether learners can write a new criterion or diagnose a novel failure unaided. No agent-only results should be presented as evidence of human learning.
+
+## September 10 reviewer-feedback walkthrough
+
+An independent agent read only lesson 5's prose, starter, reference approach, and public state helpers, then implemented a grader in a temporary file without inspecting checker or test source. Its first attempt rejected all cases: 10/13 classified correctly, but all three valid alternatives failed. This exposed missing event-field and tool-argument documentation. After those contracts were added, a second attempt accepted all three valid paths and rejected all ten violations (13/13). Preserve both observations; this is agent-assisted validation of instructions, not evidence of human learning.
+
+Lesson 7 now uses neutral IDs and separate unlabeled calibration/validation commands. Hints live outside the printable guide. Historical judge results and debriefs come after the learner records both sets of labels. The supplied validation examples remain development-exposed; neutral IDs do not create a pristine holdout. Course version 3 tells the tutor to preserve older labels and prior exposure during migration.

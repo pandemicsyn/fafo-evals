@@ -12,15 +12,15 @@ Predict: did the task succeed? What would you inspect next?
 
 Run `npm run examples` when the checkout is available. Inspect `output.before`, `output.after`, and `trace`. Explain how a credible answer can hide missing work. Then compare `npm run examples -- lying-tool`: even a successful-looking tool receipt can disagree with state.
 
-Completion: the learner names independent state evidence and distinguishes a claimed write from an actual write. First hint: count issues before and after. Further hints: solutions lesson 1.
+Completion: the learner names independent state evidence and distinguishes a claimed write from an actual write.
 
 ## 2 — Error analysis before a score
 
-Predict two ways issue triage could hurt a user. Run `npm run examples -- --list`, then inspect two examples individually. Write `.learn-evals/failures.md`: observation, user impact, and the cheapest evidence/check that could detect it. Label your own judgments before asking the tutor.
+Predict two ways issue triage could hurt a user. Run `npm run examples -- --list`, then inspect two synthetic examples individually; leave the historical judge capture until after lesson 7's labeling. Write `.learn-evals/failures.md`: observation, user impact, and the cheapest evidence/check that could detect it. Label your own judgments before asking the tutor.
 
 Avoid immediately reaching for a universal helpfulness score. A taxonomy earns its place by explaining observed failures.
 
-Completion: two specific failures tied to artifacts, not vague “quality” labels. Hint: “wrong feature” loses the report even though an issue exists.
+Completion: two specific failures tied to artifacts, not vague “quality” labels.
 
 ## 3 — Break the grader
 
@@ -28,25 +28,27 @@ Run `npm run lesson -- 3`. It challenges `exercises/grader.ts` with synthetic ou
 
 Edit only the learner grader initially. Use tracker snapshots, stable IDs, exact new-issue count, feature, status, absence of new comments, and unchanged existing records. Rerun. You can import the companion's snapshot-diff helpers. Don't special-case example IDs or require one reply wording.
 
-Completion: rejects no-write/wrong-feature/double-write and accepts a faithful paraphrase. Explain why a structurally valid issue can still lose reproduction facts. Hint: inspect output state; solutions lesson 3 has a reference approach.
+Completion: rejects no-write/wrong-feature/double-write and accepts a faithful paraphrase. Explain why a structurally valid issue can still lose reproduction facts.
 
 ## 4 — Cases that distinguish behavior
 
-Run `npm run lesson -- 4`; read `src/evals/cases.ts` and `src/fixtures.ts`, excluding reserved entries during tuning. These 14 authored cases are a teaching set, not a production benchmark.
+Run `npm run lesson -- 4`; read `src/evals/cases.ts` and `src/fixtures.ts`, excluding reserved entries during tuning. The file has 11 teaching cases and 3 reserved cases, not a production benchmark.
 
 Predict: should a similarly titled issue about truncated large exports count as a duplicate of an empty export that hangs? Write a complementary case before editing the prompt. Required report facts: feature, trigger, expected, observed. Duplicate means matching feature, trigger and failure in an open issue.
 
-Completion: add one novel case and its opposite/complement, with an unambiguous criterion. Hint: compare true duplicate, similar-title and closed-duplicate.
+Completion: add one novel case and its opposite/complement, with an unambiguous criterion.
 
 ## 5 — Outcome and trajectory
 
 Run `npm run lesson -- 5`. It checks `exercises/trajectory.ts` against synthetic transcripts and independently observed tracker state; no API key is needed. The starter checks only whether `get_issue` was called, so the initial failure is intentional.
 
+Event fields: `tool_call` has `id`, `name`, and `arguments`; `search_issues` takes `{ query }`, `get_issue` takes `{ id }`, and `add_comment` takes `{ issueId, body }`. A `tool_result` has `toolCallId`; a failed result has `error`, while a successful result has `content` and no error. The starter comments document this contract too.
+
 Predict which paths should pass before editing: different queries and candidate-reading orders can be valid; reading the target after commenting, reading the wrong candidate, or using a failed read cannot justify the write. A successful-looking comment call can also write to the wrong tracker record.
 
-Edit the learner function. Require successful search, successful inspection of the expected duplicate after search and before the comment call, and one actual comment on that target with no collateral writes. Match tool calls to results by ID; prose naming a tool is not execution evidence. Keep challenge fixtures and expectations fixed. Rerun until both valid alternatives and planted failures are classified correctly.
+Edit the learner function. Walk events in order, joining each `tool_result.toolCallId` to its `tool_call.id`. Count search and inspection only when their successful results arrive. The expected issue's read result must arrive after a successful search result and before the `add_comment` call; a read call alone or a result arriving after the write is insufficient. At the comment call, require `arguments.issueId === expectedIssueId`. Independently require exactly one stored comment on that target, no new issues, and unchanged existing records. Both arguments and state must match; prose naming a tool is not execution evidence. Keep challenge fixtures and expectations fixed. Rerun until both valid alternatives and planted failures are classified correctly.
 
-Completion: explain why each constraint matters, pass the supplied checks, and propose a novel counterexample. Hint: walk ordered events and keep the independently observed state check. The live suite in `src/evals/triage.eval.ts` retains its simpler search-presence assertion; integrating your stronger grader there is an explicit follow-up, not an automatic consequence of editing the exercise.
+Completion: explain why each constraint matters, pass the supplied checks, and propose a novel counterexample. The live suite in `src/evals/triage.eval.ts` retains its simpler search-presence assertion; integrating your stronger grader there is an explicit follow-up, not an automatic consequence of editing the exercise.
 
 ## 6 — Clarification is a conversation
 
@@ -54,7 +56,7 @@ Run `npm run lesson -- 6`. It checks `exercises/conversation.ts` against synthet
 
 The starter grades only the final state. Predict why a premature first-turn write can have exactly the same ending as a correct conversation. Edit the learner function to require observed turns, check every earlier snapshot against the original before state, and retain the final outcome check. Include the middle of a three-turn conversation: checking only the first and last snapshots is insufficient.
 
-Completion: accept delayed creation and continued clarification; reject early issues/comments, interim damage to old records, missing observations, and wrong final outcomes. Pass the checker and explain one pair with the same ending but different grades. Hint: reuse `gradeOutcome` for each earlier turn with the clarification expectation. Question relevance still needs human review.
+Completion: accept delayed creation and continued clarification; reject early issues/comments, interim damage to old records, missing observations, and wrong final outcomes. Pass the checker and explain one pair with the same ending but different grades. Question relevance still needs human review.
 
 Keep this lesson offline. Revisit the conversation cases after model setup in lessons 7–8; editing the exercise does not alter the app's live grader.
 
@@ -64,9 +66,13 @@ Run `npm run lesson -- 7` to see unlabeled calibration pairs. Label each in `.le
 
 For model calls, copy `.dev.vars.example` to the ignored `.dev.vars` file and add the OpenRouter key there. Then run `npm run evals:judge -- --labels=.learn-evals/labels.json`; the judge does not need the app server. This uses the separate OpenRouter judge model against fixed synthetic outputs. Without your file it compares against reference author labels; don't describe those as learner annotations. The tutor must not send human labels or expected verdicts to the judge.
 
-Inspect false accepts and false rejects, not agreement alone. Run `npm run examples -- judge-disagreement` for the captured failure where a judge accepted an invented Redux diagnosis. Try `--repeat=3` on the same outputs to expose judge variance. Revise the rubric after inspecting disagreements, then run `npm run evals:judge -- --validation` on the separate batch. Once that batch informs a rubric revision, it is development data; use fresh examples for another independent check. A few examples demonstrate calibration, not readiness to gate production.
+Inspect false accepts and false rejects, not agreement alone. Try `--repeat=3` on the same outputs to expose judge variance. The shipped rubric is already v2: revise `src/evals/judge.ts` only if your evidence reveals an unclear criterion. If everything agrees, author a new borderline calibration pair instead of forcing a disagreement.
 
-Completion: explain one disagreement with quoted evidence, or challenge the judge with a new borderline pair if it agrees on everything. Keep API/parse errors out of semantic pass/fail counts. No required issue means the quality criterion is inapplicable; a missing required issue is a failed outcome. Hint: the polished issue that omits “zero matches” is the dangerous kind of failure.
+Before reading reference answers or historical captures, run `npm run lesson -- 7 --validation` and save your labels in `.learn-evals/validation-labels.json`. Then run `npm run evals:judge -- --validation --labels=.learn-evals/validation-labels.json`. Keep validation separate from your edits. The supplied validation batch was inspected during v2 development; it is practice data, not an untouched quality estimate. Use fresh cases for an independent check after tuning.
+
+After labels for both batches are saved, ask the tutor for the lesson 7 debrief in [the reference approaches](solutions.md), or run `npm run examples -- judge-disagreement`. That is a historical Nemotron/v1 judge capture, not the current Flash/v2 judge. It is not a failure you must reproduce.
+
+Completion: explain a disagreement with quoted evidence, or challenge the judge with a new borderline pair if it agrees on everything. Keep API/parse errors out of semantic pass/fail counts. No required issue means the quality criterion is inapplicable; a missing required issue is a failed outcome.
 
 ## 8 — Run it again
 
@@ -78,7 +84,7 @@ Optional conversation transfer: with the app running, use `npm run evals -- --ca
 
 Predict whether one pass means dependable behavior. Preserve all attempts. `pass@k` asks whether at least one of k attempts succeeds; `pass^k` asks whether all succeed. Don't compute these from a pooled success rate across unrelated tasks or assume independent trials without justification.
 
-Completion: explain the question each metric answers and why five runs are an exercise budget. Hint: compare “3 of 5 succeeded” with “eventually got one pass.”
+Completion: explain the question each metric answers and why five runs are an exercise budget.
 
 ## 9 — Break the environment
 
@@ -86,7 +92,7 @@ Run `npm run lesson -- 9`. It checks the deliberately broken factory in `exercis
 
 Predict what happens if you fix it by returning a new tracker on every call: separate trials become clean, but the same conversation forgets its prior turns. Edit the factory so each trial ID retains its own tracker within one store, initialized from the supplied seed. Keep different stores independent too.
 
-Completion: pass checks for same-trial continuity, interleaved isolated writes, preserved seed records, unchanged seed input, independent closing, and separate stores. Explain how contamination could turn a new-issue case into an apparent duplicate case. Hint: scope a map to the factory and key it by trial ID; the Tracker constructor copies seed state.
+Completion: pass checks for same-trial continuity, interleaved isolated writes, preserved seed records, unchanged seed input, independent closing, and separate stores. Explain how contamination could turn a new-issue case into an apparent duplicate case.
 
 Then compare with the application's working `src/trials.ts` and inspect timeout/cleanup tests in `tests/http.test.ts`. A timeout is an execution error and a missing artifact is unavailable evidence. Repair the environment and rerun contaminated comparisons before tuning prompts.
 

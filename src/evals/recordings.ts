@@ -87,7 +87,7 @@ export function recordings(): Recording[] {
 // a validation example is development data; it no longer gives an untouched check of that revision.
 export const calibrationExamples = [
   {
-    id: 'faithful-short',
+    id: 'pair-01',
     split: 'calibration',
     report: exportReport,
     issue:
@@ -95,7 +95,7 @@ export const calibrationExamples = [
     human: 'pass',
   },
   {
-    id: 'missing-zero',
+    id: 'pair-02',
     split: 'calibration',
     report: exportReport,
     issue:
@@ -103,7 +103,7 @@ export const calibrationExamples = [
     human: 'fail',
   },
   {
-    id: 'invented-browser',
+    id: 'pair-03',
     split: 'calibration',
     report: exportReport,
     issue:
@@ -111,7 +111,7 @@ export const calibrationExamples = [
     human: 'fail',
   },
   {
-    id: 'faithful-search',
+    id: 'pair-04',
     split: 'validation',
     report: searchReport,
     issue:
@@ -119,7 +119,7 @@ export const calibrationExamples = [
     human: 'pass',
   },
   {
-    id: 'invented-fix',
+    id: 'pair-05',
     split: 'validation',
     report: searchReport,
     issue:
@@ -127,7 +127,7 @@ export const calibrationExamples = [
     human: 'fail',
   },
   {
-    id: 'wrong-observation',
+    id: 'pair-06',
     split: 'validation',
     report: searchReport,
     issue:

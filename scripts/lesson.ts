@@ -7,6 +7,10 @@ import { learnerTrialStore } from '../exercises/isolation.ts';
 import { checkTrajectory, checkConversation, checkIsolation } from '../src/evals/challenges.ts';
 const lesson = Number(process.argv[2] ?? 1);
 if (!Number.isInteger(lesson) || lesson < 1 || lesson > 10) throw new Error('Choose lesson 1–10.');
+const options = process.argv.slice(3);
+if (options.some((option) => option !== '--validation') || (options.length && lesson !== 7))
+  throw new Error('Only lesson 7 accepts --validation.');
+const split = options.includes('--validation') ? 'validation' : 'calibration';
 const guide = await readFile(
   new URL('../skills/learn-evals/references/lessons.md', import.meta.url),
   'utf8',
@@ -40,16 +44,18 @@ if (lesson === 3) {
 }
 // LESSON 7: label these fixed pairs yourself before running the judge. Author labels are
 // intentionally omitted from the display; success means explaining agreements and disagreements.
-if (lesson === 7)
+if (lesson === 7) {
+  console.log(`Unlabeled ${split} pairs — save your verdicts before opening reference answers.`);
   console.log(
     JSON.stringify(
       calibrationExamples
-        .filter((e) => e.split === 'calibration')
+        .filter((e) => e.split === split)
         .map(({ id, report, issue }) => ({ id, report, issue })),
       null,
       2,
     ),
   );
+}
 // LESSON 8: this is a supplied illustration, not five actual model runs. Predict what it says
 // about dependability, then use the guide's live command to collect your own repeated trials.
 if (lesson === 8)

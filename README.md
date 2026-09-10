@@ -85,6 +85,7 @@ An inexpensive upgrade candidate is [GLM 5.3 Flash](https://openrouter.ai/z-ai/g
 | ---------------------------------------------------------- | -------------------------------------------------------------------- |
 | `npm run examples -- --list`                               | List synthetic failure examples; no model calls                      |
 | `npm run lesson -- 1` through `10`                         | Print a lesson; 3/5/6/9 check exercises, 7/8 show examples           |
+| `npm run lesson -- 7 --validation`                         | Show the separate validation pairs without reference labels          |
 | `npm run evals -- --cases=true-duplicate,similar-title`    | Run selected live cases                                              |
 | `npm run evals -- --all`                                   | Run all teaching cases, excluding reserved examples                  |
 | `npm run evals:repeat -- --cases=new-search`               | Five independent trials; retain every result                         |
@@ -98,7 +99,9 @@ An inexpensive upgrade candidate is [GLM 5.3 Flash](https://openrouter.ai/z-ai/g
 | `npm run format`                                           | Format with Oxfmt                                                    |
 | `npm run lint`                                             | Type-aware Oxlint, including unsafe and explicit `any` checks        |
 
-Lesson 7 prints unlabeled pairs. Save your own judgments in `.learn-evals/labels.json` as an object mapping every displayed example ID to `"pass"` or `"fail"`. The judge never receives those labels. `--repeat=3` repeats grading on identical outputs so application variation doesn't obscure judge variation.
+Lesson 7 prints pairs with neutral IDs and no reference labels. Save your own judgments in `.learn-evals/labels.json` as an object mapping every displayed example ID to `"pass"` or `"fail"`. Use `npm run lesson -- 7 --validation` for the other split, save `.learn-evals/validation-labels.json`, and compare with `npm run evals:judge -- --validation --labels=.learn-evals/validation-labels.json`. Save both sets of labels before opening reference answers or the historical judge capture. The judge never receives those labels. `--repeat=3` repeats grading on identical outputs so application variation doesn't obscure judge variation.
+
+The shipped judge rubric is v2. Historical Nemotron/v1 failures illustrate earlier behavior; reproducing them is not required. Revise the current rubric only when new evidence justifies it. Both supplied splits were inspected during development and are practice data. For a fresh quality estimate, author new examples. If resuming an older checkout, preserve old label files and map their IDs to the unchanged pairs; renamed IDs do not make previously seen examples unseen.
 
 Each live trial saves input, transcript, tool events, independent before/after and per-turn snapshots, runtime usage metadata, revisions, timing, and errors under `artifacts/trials/`. Run summaries and Vitest JSON are archived under `artifacts/runs/`; the local UI opens the latest result. These artifacts and learner progress are ignored by Git. Provider catalog cost estimates are not bills; unknown cost stays `null`.
 
