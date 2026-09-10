@@ -11,7 +11,7 @@ Teach a fullstack developer to make a claim about an AI system, collect evidence
 
 Default a new learner to lesson 1. Briefly offer **start**, **resume**, or **apply to my app**; don't make an intake form a prerequisite. Read [the lesson guide](references/lessons.md) only as far as the current lesson. It contains the first exercise so teaching can begin without the blog, a checkout, credentials, or network access.
 
-For runnable exercises, find an existing checkout by its `package.json` name `fafo-evals` and confirm its origin. Otherwise help choose a destination and clone `https://github.com/pandemicsyn/fafo-evals` into a new directory. Preserve existing work. The installed skill directory is teaching material, not the app checkout.
+For runnable exercises, find an existing checkout by its `package.json` name `fafo-evals` and confirm its origin. Otherwise help choose a destination and clone `https://github.com/pandemicsyn/fafo` into a new directory. Preserve existing work. The installed skill directory is teaching material, not the app checkout.
 
 In the checkout: read `docs/usage.md`, check Node >=22.19, install with `npm ci`, then run `npm run examples`. Setup and initial lessons make no API calls. Suggest the official implementation skill with `npx skills add getsentry/vitest-evals` if absent; consult https://vitest-evals.sentry.dev/docs as a fallback. It is useful guidance, not a prerequisite for discussing the first example.
 

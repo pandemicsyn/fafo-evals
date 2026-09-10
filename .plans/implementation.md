@@ -6,7 +6,7 @@ Project: **fafo-evals**.
 
 Tagline (user supplied): **Learn evals via fafo aka breaking things**.
 
-Repository: https://github.com/pandemicsyn/fafo-evals
+Repository: https://github.com/pandemicsyn/fafo
 
 Implementation checkout: `/Users/pandemicsyn/projects/neonronin/fafo-evals`.
 
@@ -228,7 +228,7 @@ The user wants **install skill → invoke slash command → guided course** as a
 
 Keep the article independently useful as well: worked examples and explanations must not require installing either skill. Share lesson IDs and tested code/artifacts across the post and skill; adapt the prose to reading versus interactive teaching.
 
-Recommend installing the official skill with `npx skills add getsentry/vitest-evals`. Our repository is `pandemicsyn/fafo-evals`; verify its teaching-skill installation command once `skills/learn-evals` exists and the installer actually discovers it. A public repository alone does not make the skill installable.
+Recommend installing the official skill with `npx skills add getsentry/vitest-evals`. Our repository is `pandemicsyn/fafo`; verify its teaching-skill installation command once `skills/learn-evals` exists and the installer actually discovers it. A public repository alone does not make the skill installable.
 
 Modes:
 
@@ -265,7 +265,7 @@ Compare **official skill alone** against **official skill plus learn-evals** und
 
 - [ ] Finish companion implementation before changing the blog's draft flag.
 - [ ] Verify every article command and code excerpt from a fresh clone with pinned dependencies.
-- [ ] Retain the verified `pandemicsyn/fafo-evals` clone URL; complete and test setup and both skill installation instructions before removing the draft note.
+- [ ] Retain the verified `pandemicsyn/fafo` clone URL; complete and test setup and both skill installation instructions before removing the draft note.
 - [ ] Replace or explicitly retain illustrative report tables as illustrative; never present invented results as measurements.
 - [ ] Confirm no refund scenario or deployment exercise remains.
 - [x] Use Apache 2.0 for the repository and bundled skill. Omit custom copyright notices at the owner's request. Write original prose and examples; cite concepts at the relevant claims. Do not copy entire source articles into skill references.

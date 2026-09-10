@@ -7,7 +7,7 @@ Learn evals by messing with them: inspect failures, fix bad graders, and try you
 ## Install
 
 ```sh
-npx skills add pandemicsyn/fafo-evals --skill learn-evals
+npx skills add pandemicsyn/fafo --skill learn-evals
 npx skills add getsentry/vitest-evals
 ```
 

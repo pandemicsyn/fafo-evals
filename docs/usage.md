@@ -5,8 +5,8 @@
 Use **Node 22.19+** (Node 22 LTS recommended) and npm.
 
 ```sh
-git clone https://github.com/pandemicsyn/fafo-evals.git
-cd fafo-evals
+git clone https://github.com/pandemicsyn/fafo.git
+cd fafo
 npm ci
 npm run examples
 npm run lesson -- 1
