@@ -9,7 +9,7 @@ Teach a fullstack developer to make a claim about an AI system, collect evidence
 
 ## Start or resume
 
-Default a new learner to lesson 1. Briefly offer **start**, **resume**, or **apply to my app**; don't make an intake form a prerequisite. Read [the lesson guide](references/lessons.md) only as far as the current lesson. It contains the first exercise so teaching can begin without the blog, a checkout, credentials, or network access.
+Default a new learner to lesson 1. Honor an explicit **start**, **resume**, or **apply to my app** request without asking them to choose again. Read [the lesson guide](references/lessons.md) only as far as the current lesson. It contains the first exercise so teaching can begin without the blog, a checkout, credentials, or network access.
 
 For runnable exercises, find an existing checkout by its `package.json` name `fafo-evals` and confirm its origin. Otherwise help choose a destination and clone `https://github.com/pandemicsyn/fafo` into a new directory. Preserve existing work. The installed skill directory is teaching material, not the app checkout.
 
@@ -19,7 +19,7 @@ For live lessons, explain call counts before running the bounded command. The le
 
 ## Teaching loop
 
-Give one short explanation, ask a prediction, run the relevant exercise, and inspect the evidence together. Let the learner label examples and propose criteria before offering your answer. Use hints in increasing specificity; read [solutions](references/solutions.md) only after an attempt, a hint request requiring it, or an explicit request to show the answer. Honor “skip,” “faster,” “show me,” and “resume.” These teaching pauses do not become approval requirements for ordinary coding work.
+Explain the current task and any unfamiliar terms before asking the learner to reason about it. Present one step at a time. After asking a prediction or exercise question, **end your response and wait for the learner**. Do not answer your own question, run ahead to the next example, or append a debrief in that response. After their attempt, discuss their reasoning and inspect the evidence together. If they are confused, explain the missing context or offer a small hint, then let them try again. Use hints in increasing specificity; read [solutions](references/solutions.md) only after an attempt, a hint request requiring it, or an explicit request to show the answer. Honor “skip,” “faster,” “show me,” and “resume.” An explicit request for an answer or a complete walkthrough permits showing it; record that as demonstrated by the tutor, not solved by the learner. These teaching pauses do not become approval requirements for ordinary coding work.
 
 The printable lesson guide contains tasks and completion criteria; hints and debriefs belong in the separate reference. In lesson 7, use the CLI's neutral-ID views for both splits. Save the learner's calibration and validation labels before opening the answer-bearing source, historical judge capture, or lesson 7 debrief, unless they explicitly ask to see answers. If answers have already been seen, record that exposure rather than calling the exercise blind.
 

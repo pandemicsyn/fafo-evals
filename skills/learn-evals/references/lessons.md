@@ -1,20 +1,51 @@
 # Lesson guide
 
-Teach one lesson at a time. A task is a case; a trial is one execution; the harness runs it and gathers evidence; graders decide whether named criteria hold. The transcript shows what happened along the way. The outcome is the actual resulting state. These concepts travel to larger eval frameworks.
+Teach one lesson at a time, across as many conversational turns as needed. The steps below are tutor guidance, not a script to recite in one response. Introduce terms when the learner encounters the thing they name.
 
-The local issue-triage agent searches a fictional tracker, asks for missing report facts, and creates one issue or comments once on an open duplicate. It must search before writing, read candidate details before deciding they're duplicates, and explain a search failure without writing. Preserve existing records and the user's facts. No GitHub connection or deployment is needed.
+The later exercises expand the app's job: search a fictional tracker, ask for missing report facts, and create one issue or comment once on an open duplicate. Introduce those policies as the exercises need them; lesson 1 starts with an empty tracker and one report.
 
 ## 1 — What would convince you?
 
-From the companion checkout, run `npm run examples`. Explain first that this prints prepared JSON in the terminal: no model runs, no real issue is created, and there is no code to repair in this lesson. Without a checkout, show the same evidence below and discuss it; setup can wait.
+**First response: set up the task, then stop at one question.** Explain that an eval is a repeatable test of whether an AI feature does the job you expect. This course uses a small fictional bug tracker, like GitHub Issues. Its AI assistant takes a user's bug report and files an issue for a developer to investigate; it does not fix the bug. You are the tutor guiding the learner through testing that assistant.
 
-The input reports that pressing Escape clears issue-search text but leaves the list filtered. What you expected: one new issue about issue search containing the user's reproduction steps. Ask the learner where they would look to check that it was stored.
+This lesson is an inspection exercise: no code edits, API key, or setup needed to begin. Tell the learner you'll use prepared examples, not run a model. Start with this user's report:
 
-Focus on three printed fields: `output.reply` says “Created ISS-1 with your reproduction steps.” Both `output.before.issues` and `output.after.issues` are `[]`, meaning no stored issues. Have the learner describe what they got: a confirmation message but no issue. A successful write would put a new issue object in the after list. These are synthetic examples, not captured model failures.
+> In the issue list, type a word into search and press Escape. Expected: search clears and all issues return. Actual: the input clears, but the list stays filtered until I refresh.
 
-Then run `npm run examples -- lying-tool`. Have the learner compare `trace[0].result`, which contains an issue object with `id: "ISS-1"`, with the still-empty `output.after.issues`. The receipt claims a write that the tracker doesn't contain. With no checkout, describe these two pieces of evidence instead.
+The report describes a bug in a product's search screen. The assistant's job is to save that report in the tracker. What you expect from the assistant: one new issue about issue search, with enough detail for a developer to reproduce the bug. The tracker starts empty. The assistant replies: “Created ISS-1 with your reproduction steps.”
 
-Completion: for both examples, point to the success claim and the state evidence contradicting it. Explain why a reply or tool receipt is insufficient. Introduce the case/trial/harness/transcript/grader/outcome terms after inspecting the evidence. Save preservation of existing records for the seeded-state checks later; this tracker starts empty.
+Ask what the learner would check before accepting that the assistant finished the job. **End the response here.** Don't reveal the tracker result, answer the question, introduce the second example, or give a glossary yet.
+
+**After their response: inspect the first result.** Acknowledge their proposed check. If they have a checkout and want to follow along, run `npm run examples`; explain beforehand that it prints prepared JSON in the terminal and makes no API calls. Otherwise use this excerpt:
+
+```json
+{
+  "output": {
+    "reply": "Created ISS-1 with your reproduction steps.",
+    "before": { "issues": [] },
+    "after": { "issues": [] }
+  }
+}
+```
+
+Explain the fields before asking for an interpretation: `reply` is the assistant's message; `before` and `after` are tracker snapshots collected by the test code before and after the assistant's run. `issues` is the list of saved issues; `[]` is an empty list. Ask the learner to compare the expected change with these snapshots and decide whether the task succeeded. Wait for their answer before debriefing. If they already ran the command and discussed its result, work from that evidence instead of pretending it is unseen.
+
+**After discussing their verdict: inspect a tool result.** Explain that the assistant uses tools to interact with the tracker, and a tool result is the response returned by one of those calls. Run `npm run examples -- lying-tool`, or show this excerpt without a checkout:
+
+```json
+{
+  "trace": [
+    {
+      "result": { "id": "ISS-1", "title": "Escape clears search text but leaves results filtered" }
+    }
+  ],
+  "output": { "after": { "issues": [] } }
+}
+```
+
+Here `trace[0].result` is the tool's returned issue object. Ask how the learner would resolve the disagreement between it and the tracker snapshot. Wait again. Read lesson 1's [debrief](solutions.md) after their attempt or when they request help.
+
+Completion: the learner explains their verdict for both examples using the observed evidence, then proposes what they would check if the tracker contained one saved issue. Checking existence and checking that its text preserves the report are separate requirements. Introduce **case** (this report, starting state, and expectation), **trial** (one run), and **outcome** (the resulting tracker state) by naming the pieces just examined. Save **grader** for lesson 3, and **harness** and **trace** for the code and tool checks that use them. Save preservation of existing records for the seeded-state exercises; this tracker starts empty.
 
 ## 2 — Error analysis before a score
 
@@ -25,6 +56,8 @@ Avoid immediately reaching for a universal helpfulness score. A taxonomy earns i
 Completion: two specific failures tied to artifacts, not vague “quality” labels.
 
 ## 3 — Break the grader
+
+A **grader** is a check that decides whether a particular requirement was met. In lesson 1 you made that call by inspecting the result; here you will write a TypeScript function to check it automatically.
 
 Run `npm run lesson -- 3` and open `exercises/grader.ts`. It prints a table and initially exits nonzero because the supplied grader is wrong. Explain the columns before interpreting the score: `expected` is whether the example should be accepted, `actual` is the learner grader's verdict, and `graderCorrect` says whether they agree. A bad output correctly rejected has false/false/true. Inspect `convincing-no-write`, then predict which valid alternative the starter rejects.
 
@@ -63,6 +96,8 @@ Completion: accept delayed creation and continued clarification; reject early is
 Keep this lesson offline. Revisit the conversation cases after model setup in lessons 7–8; editing the exercise does not alter the app's live grader.
 
 ## 7 — Give the judge one job
+
+A **model judge** is a grader that asks another model to assess a specific requirement. Here it compares the saved issue with the original report for missing or invented facts. The learner will label examples first so they can check whether the judge deserves their trust.
 
 Run `npm run lesson -- 7` without a model key. It prints three pairs with `id`, `report`, and `issue`. Compare each issue with its report using one criterion: preserve reproduction facts without invention. Note supporting passages yourself.
 
