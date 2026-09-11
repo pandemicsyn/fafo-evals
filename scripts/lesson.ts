@@ -12,7 +12,7 @@ if (options.some((option) => option !== '--validation') || (options.length && le
   throw new Error('Only lesson 7 accepts --validation.');
 const split = options.includes('--validation') ? 'validation' : 'calibration';
 const guide = await readFile(
-  new URL('../skills/learn-evals/references/lessons.md', import.meta.url),
+  new URL('../.agents/skills/learn-evals/references/lessons.md', import.meta.url),
   'utf8',
 );
 const sections = guide.split(/(?=^## \d+ —)/m);

@@ -209,26 +209,26 @@ These commands are implemented in the companion package. See its README for the 
 
 ## 7. Teaching skill
 
-Package `skills/learn-evals/SKILL.md` with concise name/description and teaching workflow. Add focused lesson and apply-mode references as needed; do not duplicate upstream library docs. Put installation instructions in the companion README.
+Keep the canonical skill at `.agents/skills/learn-evals/SKILL.md` with concise name/description and teaching workflow. `.claude/skills/learn-evals` is a relative symlink to that directory. The lesson CLI reads the canonical references. Add focused lesson and apply-mode references as needed; do not duplicate upstream library docs. Keep setup commands in a lightweight root `AGENTS.md`.
 
-### Standalone entry point and onboarding
+### Project entry point and optional installation
 
-The user wants **install skill → invoke slash command → guided course** as a complete alternative to reading the post. The skill is a standalone course interface, not a thin instruction to fetch and summarize the article.
+The default is **clone repo → open coding agent in it → request lesson 1** as a complete alternative to reading the post. The tutor uses the current checkout and helps install dependencies at the first runnable exercise. Optional standalone installation remains useful from other projects; it is not required before learning in the repo. The skill contains the course rather than fetching and summarizing the article.
 
 - [ ] Target `/learn-evals` as the learner-facing command where supported. Verify installation, discovery, and exact invocation in each coding-agent client we document. Add a minimal client-specific command wrapper only where needed; keep the curriculum in the skill. Do not promise identical slash syntax across clients without testing it.
 - [ ] Package the teaching essentials and lesson references with the installed skill. It must work without fetching this blog post or having its source in context.
 - [ ] On invocation, briefly offer to start, resume, or apply the workflow to an existing project. Default a new learner to the first exercise, not an exhaustive intake questionnaire.
-- [ ] Detect an existing `fafo-evals` checkout. Otherwise help choose a local destination and clone the public repository into a new directory without overwriting existing work. Installation of the skill must not itself silently clone the app or install application dependencies.
+- [ ] Prefer the current `fafo-evals` checkout, including forks and renamed directories, and its matching project skill. Only course mode invoked elsewhere may need help finding or cloning the repo; apply mode stays in the learner's app. Preserve existing work.
 - [ ] Check supported runtime/dependencies and guide setup. Explain what the commands accomplish without making environment setup the lesson.
 - [ ] Begin with recorded examples and deterministic grader exercises; defer model-provider credentials until the first live lesson. Keep secrets out of conversation, progress files, and committed fixtures.
-- [ ] Detect the official `vitest-evals` skill and recommend its installation if missing. Use official docs as a fallback so the initial conceptual exercise isn't blocked by a second skill installation.
+- [ ] When writing vitest-evals code, suggest the official skill if missing. Use official docs as a fallback; a second skill installation is not an onboarding step.
 - [ ] Include a short explanation, prediction prompt, exercise action, evidence to inspect, hint progression, and completion criterion for each lesson. Don't dump the entire article into one response.
 - [ ] Support natural requests such as "hint," "show me," "skip this," and "resume." Expose slash-command arguments only if the client supports and we verify them.
 - [ ] Record the companion version/commit in learner progress. On resume, detect incompatible exercise changes and explain the needed adjustment rather than pretending an old checkpoint still matches.
 
 Keep the article independently useful as well: worked examples and explanations must not require installing either skill. Share lesson IDs and tested code/artifacts across the post and skill; adapt the prose to reading versus interactive teaching.
 
-Recommend installing the official skill with `npx skills add getsentry/vitest-evals`. Our repository is `pandemicsyn/fafo`; verify its teaching-skill installation command once `skills/learn-evals` exists and the installer actually discovers it. A public repository alone does not make the skill installable.
+Optional commands remain `npx skills add pandemicsyn/fafo --skill learn-evals` for portable tutoring and `npx skills add getsentry/vitest-evals` for library guidance. Verify installer discovery of `.agents/skills/learn-evals` after moving the skill, and check relative links from a relocated checkout.
 
 Modes:
 

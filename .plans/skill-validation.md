@@ -2,6 +2,10 @@
 
 The install path and format have been checked. Behavior and learning outcomes need separate evidence.
 
+## September 11 project-skill layout
+
+The default onboarding now starts with cloning the repo. The canonical skill is `.agents/skills/learn-evals`; the Claude directory links to it. `npx skills add . --list` discovers exactly one `learn-evals` skill, and the skill validator passes. Copying both hidden directories into a temporary location with relative symlinks preserved resolves the Claude entry point and all three reference files to the canonical content. The lesson CLI loads the moved guide; all 46 companion tests pass. An independent static review found no actionable issues in the layout and onboarding changes. These are filesystem, installer-discovery, and code checks; native client discovery has not been exercised in fresh Codex, Claude Code, and Kilo sessions.
+
 Use isolated project copies. Compare the official vitest-evals skill alone with official + learn-evals, using the same coding-agent model, fixtures, prompts and tool permissions. No real issue tracker or private data is needed.
 
 | Request                                                                    | Observable result                                                                                                                 |

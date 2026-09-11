@@ -1,5 +1,11 @@
 # Running the exercises
 
+## Learn with your coding agent
+
+Clone the repo and open your agent in it, as shown in the [README](../README.md). The teaching skill is part of the checkout; no skill installation is needed for the course. The agent can help with the commands below as you reach each exercise.
+
+The project skill lives in `.agents/skills/learn-evals`, discovered by [Codex](https://learn.chatgpt.com/docs/build-skills) and [Kilo](https://kilo.ai/docs/customize/skills). `.claude/skills/learn-evals` links to the same directory for [Claude Code](https://code.claude.com/docs/en/skills). Open a new session in the checkout if it isn't listed. If your client doesn't discover it, or selects an older installed copy, ask it to read `.agents/skills/learn-evals/SKILL.md` directly. This also works when your Git checkout doesn't preserve symlinks.
+
 ## Start without an API key
 
 Use **Node 22.19+** (Node 22 LTS recommended) and npm.
@@ -106,7 +112,9 @@ The deterministic graders check state changes, IDs, feature/status, and prohibit
 - `src/tracker.ts`, `fixtures.ts`, `trials.ts`: state, authored fixtures, trial isolation.
 - `src/evals/`: cases, HTTP harness, deterministic graders, synthetic examples, judge adapter.
 - `exercises/`: broken starters for state grading, trajectory checks, conversations, and isolation.
-- `skills/learn-evals/`: installable standalone teaching skill.
+- `.agents/skills/learn-evals/`: teaching skill and references, also available through the optional installer.
+- `.claude/skills/learn-evals`: relative symlink to the same skill for Claude Code.
+- `AGENTS.md`: setup and run commands for coding agents.
 - `.plans/`: implementation history and remaining publication checks.
 
 `createTriageHarness()` and snapshot helpers are companion code, not Flue/vitest-evals exports. The harness uses `@flue/sdk` at the public HTTP boundary. The same criterion/data/harness/grader concepts transfer to larger systems with annotation, dataset management and production monitoring.
