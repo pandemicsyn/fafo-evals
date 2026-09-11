@@ -12,7 +12,7 @@ Implementation checkout: `/Users/pandemicsyn/projects/neonronin/fafo-evals`.
 
 Initial checkout baseline: clean working tree, `origin` points to the repository above, and the only working-tree file is `LICENSE` (MIT). At that time no runnable application, package manifest, README, or skill existed; these are now implemented. The repository and bundled skill have since switched to Apache 2.0 at the owner’s request.
 
-Draft post: `src/content/blog/learn-evals-by-breaking-things.md` in this repository.
+Draft post: `src/content/blog/learn-to-write-evals.md` in this repository.
 
 ## Delivered implementation
 

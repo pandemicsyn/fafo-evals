@@ -1,6 +1,6 @@
 # FAFO: Learn to Write Evals
 
-[Read the blog post](https://neonronin.sh/blog/learn-evals-by-breaking-things), or have your coding agent teach you.
+[Read the blog post](https://neonronin.sh/blog/learn-to-write-evals), or have your coding agent teach you.
 
 Learn evals by messing with them: inspect failures, fix bad graders, and try your own cases. The `learn-evals` skill walks you through the exercises; the official vitest-evals skill covers the library-specific bits.
 
