@@ -1,0 +1,48 @@
+{
+  "provenance": "live judge calls on fixed synthetic outputs; summary excerpts",
+  "capturedAt": "2026-09-10",
+  "companionRevision": "7f71828",
+  "model": "z-ai/glm-5.3-flash",
+  "rubricVersion": "reproduction-fidelity-v2",
+  "labelSource": "reference author labels",
+  "runs": [
+    {
+      "command": "npm run evals:judge",
+      "artifactId": "judge-6c3cd085-2cf7-4d01-a96d-f2bb3d2434fc.json",
+      "split": "calibration",
+      "summary": {
+        "planned": 3,
+        "completed": 1,
+        "errors": 2,
+        "agreements": 1,
+        "falseAccepts": 0,
+        "falseRejects": 0
+      },
+      "exitStatus": 1,
+      "errors": [
+        "Judge API returned HTTP 429; no grade was produced.",
+        "Judge API returned HTTP 429; no grade was produced."
+      ]
+    },
+    {
+      "command": "npm run evals:judge -- --validation",
+      "artifactId": "judge-bd77833e-4b44-4d8a-8934-d9136a880111.json",
+      "split": "validation",
+      "summary": {
+        "planned": 3,
+        "completed": 0,
+        "errors": 3,
+        "agreements": 0,
+        "falseAccepts": 0,
+        "falseRejects": 0
+      },
+      "exitStatus": 1,
+      "errors": [
+        "Judge API returned HTTP 429; no grade was produced.",
+        "Judge API returned HTTP 429; no grade was produced.",
+        "Judge API returned HTTP 429; no grade was produced."
+      ]
+    }
+  ],
+  "note": "Six planned calls, one completed grade, five HTTP 429 errors. No retries. Pair texts and verdicts omitted so the summary does not reveal exercise answers."
+}

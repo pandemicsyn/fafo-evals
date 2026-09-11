@@ -47,3 +47,7 @@ Default decision: free Nemotron for the application so the initial live lessons 
 - Pilot the skill with human learners and compare official vitest-evals skill alone against official + teaching skill. Installer validation is not evidence of learning effectiveness.
 - Test exact slash-command UI behavior for each client advertised. Codex installation is verified; don't promise universal slash syntax.
 - Publish the post after the companion merge. Its current Markdown renders, lesson order and command names have been checked, and the live example matches the typechecked source. Illustrative metrics remain explicitly labeled. The post stays a draft during review.
+
+## September 10 article output capture
+
+A later six-call Flash/v2 run using the unchanged rubric completed only one calibration grade, which agreed with the reference label. The other two calibration calls and all three validation calls returned HTTP 429. Both commands exited 1. No retries were made. The [captured summaries](../examples/judge-rate-limit-summary.json) support the article's terminal excerpt without exposing pair labels. This later availability failure does not replace the earlier completed smoke runs or establish semantic disagreement.
