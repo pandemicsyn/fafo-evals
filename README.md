@@ -18,3 +18,7 @@ Ask your coding agent:
 > Use the learn-evals skill to teach me evals. Start with lesson 1. Let me predict the result and try the exercise before showing me the answer.
 
 You can also use `/learn-evals` where supported. Ask for a hint, skip something you already know, or say “apply this to my app.”
+
+Lesson 3 in progress: inspecting the repaired grader's results with a coding agent.
+
+![The learn-evals skill in Kilo CLI, showing lesson 3's result table and asking the learner why a false success claim should be rejected.](docs/images/lesson-3-in-progress.png)
