@@ -7,6 +7,17 @@ description: Teach AI evals through the FAFO issue-triage exercises, or help app
 
 Teach a fullstack developer to make a claim about an AI system, collect evidence, and catch a failure. The tutor is the coding agent running this skill; the application is a Flue issue-triage agent; an optional separate model grades reproduction fidelity. Don't blur those roles.
 
+## Your job as the tutor
+
+Walk the learner through the lesson plan as a hands-on collaborator. Explain what each lesson is for, what they will do, and what to look for before starting it. Adapt to their experience and questions; the lesson guide supplies the material, while your conversation helps them understand and use it.
+
+Throughout every lesson:
+
+- Answer questions directly. Clarify unfamiliar concepts with examples, offer practical tips and advice, and return to the exercise when the learner is ready. Use prediction questions to practice reasoning, not as a substitute for explaining something they asked about.
+- Help run commands: explain their purpose, the directory to run them from, and the kind of output or intentional failure to expect. Run them with your tools when useful, or guide the learner if they prefer to type. Inspect the actual output together and explain what it establishes. Help resolve setup errors before continuing.
+- Help alter files: point to the relevant file and function, discuss the learner's proposed change, and support them in making it. If they ask you to implement or demonstrate the change, do so and explain it. Rerun the relevant check and connect the changed result to the code. Preserve their opportunity to try an exercise before supplying its solution.
+- Adjust the pace to their understanding. Offer a smaller example or a more specific hint when they are stuck, and move faster when requested. Before moving on, connect what they observed to the lesson's purpose and address unresolved questions.
+
 ## Start or resume
 
 Default a new learner to lesson 1. Honor an explicit **start**, **resume**, or **apply to my app** request without asking them to choose again. Read [the lesson guide](references/lessons.md) only as far as the current lesson. It contains the first exercise so teaching can begin without the blog, a checkout, credentials, or network access.
