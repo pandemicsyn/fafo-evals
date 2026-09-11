@@ -154,18 +154,18 @@ Acceptance: repeated cases cannot find previous trials' writes; a multi-turn cas
 
 Build 12–16 initial authored scenarios, grouped by behavior. This is a teaching set, not a representative benchmark. Reserve several cases from the guided tuning workflow, and document that files accessible to a coding agent are not a secure holdout.
 
-| Post section      | Scenario or artifact                                             | Learning verification                                        |
-| ----------------- | ---------------------------------------------------------------- | ------------------------------------------------------------ |
-| 1. Success        | Convincing reply with no issue                                   | Learner asks for independent state evidence                  |
-| 2. Error analysis | Small annotated/unannotated trace collection                     | Learner links two failure definitions to actual observations |
-| 3. Graders        | Missing write, wrong feature, duplicate write, valid paraphrase  | Check rejects seeded failures and accepts valid alternatives |
-| 4. Dataset        | True duplicate, false duplicate, incomplete and complete reports | Complementary positive/negative cases                        |
-| 5. Trajectory     | Two valid search paths; wrong issue ID                           | Necessary constraints without exact incidental sequencing    |
-| 6. Conversation   | Clarification followed by complete or still-incomplete detail    | No first-turn write; correct later action                    |
-| 7. Judge          | Preserved/missing/invented reproduction facts                    | Human/model disagreement review on real outputs              |
-| 8. Repetition     | Two prompt revisions, five trials per selected case              | All attempts retained; no unsupported winner claim           |
-| 9. Environment    | Shared tracker and too-short timeout                             | Classify confounder and invalidate affected comparisons      |
-| 10. Decision      | Per-case comparison and novel learner case                       | Explain outcome, regression, cost, and limitations           |
+| Post section                      | Scenario or artifact                                             | Learning verification                                        |
+| --------------------------------- | ---------------------------------------------------------------- | ------------------------------------------------------------ |
+| 1. Success                        | Convincing reply with no issue                                   | Learner asks for independent state evidence                  |
+| 2. Error analysis                 | Small annotated/unannotated trace collection                     | Learner links two failure definitions to actual observations |
+| 3. Lies, damned lies, and graders | Missing write, wrong feature, duplicate write, valid paraphrase  | Check rejects seeded failures and accepts valid alternatives |
+| 4. Dataset                        | True duplicate, false duplicate, incomplete and complete reports | Complementary positive/negative cases                        |
+| 5. Trajectory                     | Two valid search paths; wrong issue ID                           | Necessary constraints without exact incidental sequencing    |
+| 6. Conversation                   | Clarification followed by complete or still-incomplete detail    | No first-turn write; correct later action                    |
+| 7. Judge                          | Preserved/missing/invented reproduction facts                    | Human/model disagreement review on real outputs              |
+| 8. Repetition                     | Two prompt revisions, five trials per selected case              | All attempts retained; no unsupported winner claim           |
+| 9. Environment                    | Shared tracker and too-short timeout                             | Classify confounder and invalidate affected comparisons      |
+| 10. Decision                      | Per-case comparison and novel learner case                       | Explain outcome, regression, cost, and limitations           |
 
 - [ ] Author original synthetic issues and reports; no scraped private tickets or copied benchmark datasets.
 - [ ] Include metadata distinguishing constructed failure demonstrations from captured live runs, plus versions and capture settings. Recorded examples require a real capture or an explicit synthetic label.

@@ -55,7 +55,7 @@ Avoid immediately reaching for a universal helpfulness score. A taxonomy earns i
 
 Completion: two specific failures tied to artifacts, not vague “quality” labels.
 
-## 3 — Break the grader
+## 3 — Lies, damned lies, and graders
 
 A **grader** is a check that decides whether a particular requirement was met. In lesson 1 you made that call by inspecting the result; here you will write a TypeScript function to check it automatically.
 
