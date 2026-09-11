@@ -2,12 +2,13 @@ import * as v from 'valibot';
 import { parseJson, errorMessage } from '../src/json.ts';
 import { randomUUID } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
-import { loadEnv, requireKey, modelId } from '../src/config.ts';
+import { DEFAULT_JUDGE_MODEL, loadEnv, requireKey, modelId } from '../src/config.ts';
 import { calibrationExamples } from '../src/evals/recordings.ts';
 import {
   assessPair,
   openRouterJudgeHarness,
   RUBRIC_VERSION,
+  judgeProviderRouting,
   type JudgeResponseMetadata,
 } from '../src/evals/judge.ts';
 import { saveArtifact } from '../src/evals/artifacts.ts';
@@ -40,7 +41,7 @@ try {
   if (labelPath && examples.some((e) => !['pass', 'fail'].includes(labels[e.id])))
     throw new Error('Labels file needs a pass/fail label for every example in this split.');
   console.log(
-    `${examples.length * repetitions} judge calls on fixed synthetic outputs, model ${modelId(process.env.JUDGE_MODEL ?? 'z-ai/glm-5.3-flash')}. No application calls. Labels: ${labelPath ? 'learner-supplied' : 'reference author labels'}.`,
+    `${examples.length * repetitions} judge calls on fixed synthetic outputs, model ${modelId(process.env.JUDGE_MODEL?.trim() || DEFAULT_JUDGE_MODEL)}. No application calls. Preferred provider: ${process.env.JUDGE_PROVIDER?.trim() || 'automatic'}. Labels: ${labelPath ? 'learner-supplied' : 'reference author labels'}.`,
   );
   const results = [];
   for (const example of examples)
@@ -87,7 +88,8 @@ try {
   const file = await saveArtifact(`judge-${randomUUID()}`, {
     evidence: 'live-judge-on-synthetic-outputs',
     rubricVersion: RUBRIC_VERSION,
-    model: modelId(process.env.JUDGE_MODEL ?? 'z-ai/glm-5.3-flash'),
+    providerRouting: judgeProviderRouting(),
+    model: modelId(process.env.JUDGE_MODEL?.trim() || DEFAULT_JUDGE_MODEL),
     split,
     summary,
     results,

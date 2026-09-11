@@ -1,0 +1,51 @@
+{
+  "provenance": "live judge calls on fixed synthetic outputs; summary excerpts",
+  "capturedAt": "2026-09-10",
+  "companionBaseRevision": "c7e2c2f",
+  "codeChanges": "Provider fallback enabled; optional JUDGE_PROVIDER preference recorded.",
+  "rubricVersion": "reproduction-fidelity-v2",
+  "labelSource": "reference author labels",
+  "runs": [
+    {
+      "artifactId": "judge-bc6cf8d0-49bd-4c55-984b-86c40cd0ecc3.json",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "providerRouting": {
+        "allow_fallbacks": true,
+        "order": ["deepseek"]
+      },
+      "split": "calibration",
+      "summary": {
+        "planned": 3,
+        "completed": 3,
+        "errors": 0,
+        "agreements": 3,
+        "falseAccepts": 0,
+        "falseRejects": 0
+      },
+      "exitStatus": 0,
+      "actualProviders": ["DeepSeek", "DeepSeek", "DeepSeek"],
+      "reportedCostsUsd": [0.0005781, 0.000786468, 0.0007911]
+    },
+    {
+      "artifactId": "judge-9cc93d6f-1428-462b-af78-c46f2ca841ac.json",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "providerRouting": {
+        "allow_fallbacks": true,
+        "order": ["deepseek"]
+      },
+      "split": "validation",
+      "summary": {
+        "planned": 3,
+        "completed": 3,
+        "errors": 0,
+        "agreements": 3,
+        "falseAccepts": 0,
+        "falseRejects": 0
+      },
+      "exitStatus": 0,
+      "actualProviders": ["DeepSeek", "DeepSeek", "DeepSeek"],
+      "reportedCostsUsd": [0.0006927, 0.000799968, 0.000561168]
+    }
+  ],
+  "note": "One run per split. All six calls were served by DeepSeek. No application-level retries. Pair texts and verdicts omitted so the summary does not reveal exercise answers. Authored, development-exposed examples are not a benchmark."
+}

@@ -2,4 +2,6 @@
 OPENROUTER_API_KEY=
 # Raw OpenRouter IDs. The app adds Flue's openrouter/ prefix.
 TRIAGE_MODEL=nvidia/nemotron-3-super-120b-a12b:free
-JUDGE_MODEL=z-ai/glm-5.3-flash
+JUDGE_MODEL=deepseek/deepseek-v4.1-flash
+# Optional preferred OpenRouter provider for the judge; blank uses automatic routing.
+JUDGE_PROVIDER=deepseek

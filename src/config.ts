@@ -1,4 +1,5 @@
 import { existsSync } from 'node:fs';
+export const DEFAULT_JUDGE_MODEL = 'deepseek/deepseek-v4.1-flash';
 export const DEFAULT_MODEL = 'nvidia/nemotron-3-super-120b-a12b:free';
 export function loadEnv() {
   if (existsSync('.dev.vars')) process.loadEnvFile('.dev.vars');
@@ -13,7 +14,7 @@ export function modelId(value: string | undefined) {
   const id = value?.trim() || DEFAULT_MODEL;
   if (id.startsWith('openrouter/') || !/^[a-zA-Z0-9._-]+\/[a-zA-Z0-9._:/-]+$/.test(id)) {
     throw new Error(
-      'Use a raw OpenRouter model ID such as z-ai/glm-5.3-flash, without the openrouter/ prefix.',
+      'Use a raw OpenRouter model ID such as deepseek/deepseek-v4.1-flash, without the openrouter/ prefix.',
     );
   }
   return id;

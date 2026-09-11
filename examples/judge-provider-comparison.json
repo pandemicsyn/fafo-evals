@@ -1,0 +1,152 @@
+{
+  "provenance": "live judge calls on fixed synthetic outputs; summary excerpts",
+  "capturedAt": "2026-09-10",
+  "companionBaseRevision": "c7e2c2f",
+  "codeChanges": "Provider fallback enabled; optional JUDGE_PROVIDER preference recorded.",
+  "rubricVersion": "reproduction-fidelity-v2",
+  "labelSource": "reference author labels",
+  "diagnostics": [
+    {
+      "model": "z-ai/glm-5.3-flash",
+      "providerRouting": {
+        "allow_fallbacks": false
+      },
+      "status": 429,
+      "provider": "DeepInfra",
+      "providerErrorCode": "engine_overloaded",
+      "limitSource": "upstream_provider_shared_pool"
+    },
+    {
+      "model": "z-ai/glm-5.3-flash",
+      "providerRouting": {
+        "only": ["fireworks"],
+        "allow_fallbacks": false
+      },
+      "status": 429,
+      "provider": "Fireworks",
+      "providerErrorCode": "invalid_request_error",
+      "limitSource": "upstream_provider_shared_pool"
+    }
+  ],
+  "runs": [
+    {
+      "artifactId": "judge-bdb566e3-d51b-4798-a3d8-a51b6d439760.json",
+      "model": "z-ai/glm-5.3-flash",
+      "providerRouting": {
+        "allow_fallbacks": true
+      },
+      "split": "calibration",
+      "summary": {
+        "planned": 3,
+        "completed": 3,
+        "errors": 0,
+        "agreements": 3,
+        "falseAccepts": 0,
+        "falseRejects": 0
+      },
+      "exitStatus": 0,
+      "actualProviders": ["Relace", "Parasail", "Together"],
+      "reportedCostsUsd": [0.00016584, 0.0002409, 0.00042865]
+    },
+    {
+      "artifactId": "judge-289b5896-75e2-4565-ac35-ada391ecf4e3.json",
+      "model": "z-ai/glm-5.3-flash",
+      "providerRouting": {
+        "allow_fallbacks": true
+      },
+      "split": "validation",
+      "summary": {
+        "planned": 3,
+        "completed": 3,
+        "errors": 0,
+        "agreements": 3,
+        "falseAccepts": 0,
+        "falseRejects": 0
+      },
+      "exitStatus": 0,
+      "actualProviders": ["Together", "Together", "Relace"],
+      "reportedCostsUsd": [0.0002768, 0.00034885, 0.00013017]
+    },
+    {
+      "artifactId": "judge-bc6cf8d0-49bd-4c55-984b-86c40cd0ecc3.json",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "providerRouting": {
+        "allow_fallbacks": true,
+        "order": ["deepseek"]
+      },
+      "split": "calibration",
+      "summary": {
+        "planned": 3,
+        "completed": 3,
+        "errors": 0,
+        "agreements": 3,
+        "falseAccepts": 0,
+        "falseRejects": 0
+      },
+      "exitStatus": 0,
+      "actualProviders": ["DeepSeek", "DeepSeek", "DeepSeek"],
+      "reportedCostsUsd": [0.0005781, 0.000786468, 0.0007911]
+    },
+    {
+      "artifactId": "judge-9cc93d6f-1428-462b-af78-c46f2ca841ac.json",
+      "model": "deepseek/deepseek-v4.1-flash",
+      "providerRouting": {
+        "allow_fallbacks": true,
+        "order": ["deepseek"]
+      },
+      "split": "validation",
+      "summary": {
+        "planned": 3,
+        "completed": 3,
+        "errors": 0,
+        "agreements": 3,
+        "falseAccepts": 0,
+        "falseRejects": 0
+      },
+      "exitStatus": 0,
+      "actualProviders": ["DeepSeek", "DeepSeek", "DeepSeek"],
+      "reportedCostsUsd": [0.0006927, 0.000799968, 0.000561168]
+    },
+    {
+      "artifactId": "judge-b2eb8f06-cece-437c-8f6b-e44a878830f0.json",
+      "model": "z-ai/glm-5.3-flash",
+      "providerRouting": {
+        "allow_fallbacks": true,
+        "order": ["fireworks"]
+      },
+      "split": "calibration",
+      "summary": {
+        "planned": 3,
+        "completed": 3,
+        "errors": 0,
+        "agreements": 3,
+        "falseAccepts": 0,
+        "falseRejects": 0
+      },
+      "exitStatus": 0,
+      "actualProviders": ["Relace", "Relace", "Relace"],
+      "reportedCostsUsd": [0.00016494, 0.000139716, 0.000143766]
+    },
+    {
+      "artifactId": "judge-642fc881-9a8f-4f10-8fa5-bc51959e4f02.json",
+      "model": "z-ai/glm-5.3-flash",
+      "providerRouting": {
+        "allow_fallbacks": true,
+        "order": ["fireworks"]
+      },
+      "split": "validation",
+      "summary": {
+        "planned": 3,
+        "completed": 3,
+        "errors": 0,
+        "agreements": 3,
+        "falseAccepts": 0,
+        "falseRejects": 0
+      },
+      "exitStatus": 0,
+      "actualProviders": ["Relace", "Relace", "Relace"],
+      "reportedCostsUsd": [0.00017298, 0.00017151, 0.000113046]
+    }
+  ],
+  "note": "Each configuration ran once per split, with no application-level retries. Routing preferences are not guarantees: Fireworks-preferred requests were served by Relace. Pair texts and verdicts omitted to avoid revealing exercise answers. Six authored, development-exposed cases are not a benchmark."
+}

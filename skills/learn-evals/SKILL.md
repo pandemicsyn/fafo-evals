@@ -27,7 +27,7 @@ For runnable exercises, find an existing checkout by its `package.json` name `fa
 
 In the checkout: read `docs/usage.md`, check Node >=22.19, install with `npm ci`, then run `npm run examples`. Setup and initial lessons make no API calls. Suggest the official implementation skill with `npx skills add getsentry/vitest-evals` if absent; consult https://vitest-evals.sentry.dev/docs as a fallback. It is useful guidance, not a prerequisite for discussing the first example.
 
-For live lessons, explain call counts before running the bounded command. The learner puts `OPENROUTER_API_KEY` in the checkout's ignored `.dev.vars`; never ask them to paste it into chat. `TRIAGE_MODEL` and `JUDGE_MODEL` are separate raw OpenRouter IDs. Keep the provider OpenRouter for this course. Check current model availability and price before recommending an alternative; cheap judges still need calibration.
+For live lessons, explain call counts before running the bounded command. The learner puts `OPENROUTER_API_KEY` in the checkout's ignored `.dev.vars`; never ask them to paste it into chat. `TRIAGE_MODEL` and `JUDGE_MODEL` are separate raw OpenRouter IDs. Optional `JUDGE_PROVIDER` prefers a provider such as `deepseek`; another provider of the same model may handle a fallback. Check the actual provider in the result metadata before attributing a run to one. Keep the provider OpenRouter for this course. Check current model availability and price before recommending an alternative; cheap judges still need calibration.
 
 ## Teaching loop
 

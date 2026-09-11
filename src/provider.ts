@@ -4,19 +4,19 @@ import { openrouterProvider } from '@earendil-works/pi-ai/providers/openrouter';
 
 // Pi 0.83's static catalog predates Flash. Extend its catalog using OpenRouter's
 // public model metadata; keep Pi's authentication and streaming implementation.
-// Source: https://openrouter.ai/api/v1/model/z-ai/glm-5.3-flash (2026-09-09).
+// Source: https://openrouter.ai/api/v1/models (2026-09-10), deepseek/deepseek-v4.1-flash.
 // Rates are a catalog estimate, not measured billing; routing/provider rates vary.
 export const flash: Model<'openai-completions'> = {
-  id: 'z-ai/glm-5.3-flash',
-  name: 'GLM 5.3 Flash',
+  id: 'deepseek/deepseek-v4.1-flash',
+  name: 'DeepSeek V4.1 Flash',
   api: 'openai-completions',
   provider: 'openrouter',
   baseUrl: 'https://openrouter.ai/api/v1',
   reasoning: true,
   input: ['text', 'image'],
   contextWindow: 1048576,
-  maxTokens: 131072,
-  cost: { input: 0.07, output: 0.2333, cacheRead: 0.014, cacheWrite: 0 },
+  maxTokens: 384000,
+  cost: { input: 0.3, output: 1.2, cacheRead: 0.006, cacheWrite: 0 },
   compat: { supportsDeveloperRole: false, thinkingFormat: 'openrouter' },
 };
 export function courseProvider() {

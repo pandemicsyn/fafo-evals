@@ -24,7 +24,7 @@ Rubric v2 separates `source` and `quote` and explicitly requires a bare exact su
 
 OpenRouter reported **$0.0006965471 total** for the six Flash v2 judge calls ($0.0003309318 calibration + $0.0003656153 validation). Rates/routing can change; this is the cost of these six short calls, not a promise of future pricing. Application smoke tests used the free endpoint. Application artifacts retain runtime catalog estimates; they aren't billed-cost measurements.
 
-Default decision: free Nemotron for the application so the initial live lessons cost no model tokens at currently listed rates; Flash for the optional semantic judge. Rate limits and availability still apply. Both IDs can be changed in `.dev.vars`. Flash remains an application upgrade candidate; its application behavior has not been benchmarked here.
+Initial default decision (superseded below): free Nemotron for the application so the initial live lessons cost no model tokens at currently listed rates; Flash for the optional semantic judge. Rate limits and availability still apply. Both IDs can be changed in `.dev.vars`. Flash remains an application upgrade candidate; its application behavior has not been benchmarked here.
 
 ## Engineering checks
 
@@ -50,4 +50,12 @@ Default decision: free Nemotron for the application so the initial live lessons 
 
 ## September 10 article output capture
 
-A later six-call Flash/v2 run using the unchanged rubric completed only one calibration grade, which agreed with the reference label. The other two calibration calls and all three validation calls returned HTTP 429. Both commands exited 1. No retries were made. The [captured summaries](../examples/judge-rate-limit-summary.json) support the article's terminal excerpt without exposing pair labels. This later availability failure does not replace the earlier completed smoke runs or establish semantic disagreement.
+A later six-call Flash/v2 run using the unchanged rubric completed only one calibration grade, which agreed with the reference label. The other two calibration calls and all three validation calls returned HTTP 429. Both commands exited 1. No retries were made. The [captured summaries](../examples/judge-rate-limit-summary.json) preserve the earlier troubleshooting example without exposing pair labels. This later availability failure does not replace the earlier completed smoke runs or establish semantic disagreement.
+
+## Provider diagnosis and replacement walkthrough capture
+
+One diagnostic GLM call returned an upstream DeepInfra HTTP 429 with `limit_source: upstream_provider_shared_pool` and `provider_error_code: engine_overloaded`. The judge had disabled provider fallback. Enabling fallback completed both three-pair splits with full agreement, served by Relace, Parasail, and Together.
+
+We then ran the same six pairs with DeepSeek V4.1 Flash preferring DeepSeek, and GLM 5.3 Flash preferring Fireworks. Both completed 6/6 grades with 6/6 reference-label agreement and no errors. All DeepSeek calls were served by DeepSeek; all Fireworks-preferred GLM calls were served by Relace. A Fireworks-only diagnostic GLM request returned HTTP 429, also attributed to the upstream shared pool. These are separate configuration runs, not replacements for the preserved failures. See the [provider comparison summaries](../examples/judge-provider-comparison.json); no learner answers are exposed there.
+
+Current teaching default: DeepSeek V4.1 Flash, with `JUDGE_PROVIDER=deepseek` in the example config. Provider preference allows fallback within the selected model, and artifacts retain the preference plus actual response providers. No successful grade is retried or discarded. This smoke test supports a working walkthrough, not a general model ranking.

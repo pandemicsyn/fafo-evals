@@ -9,8 +9,8 @@ import { promisify } from 'node:util';
 it('resolves Flash and preserves other OpenRouter choices', () => {
   const catalog = courseProvider().getModels();
   expect(catalog.some((m) => m.id === modelId(undefined))).toBe(true);
-  expect(catalog.some((m) => m.id === 'z-ai/glm-5.2')).toBe(true);
-  expect(() => modelId('openrouter/z-ai/glm-5.3-flash')).toThrow();
+  expect(catalog.filter((m) => m.id === 'deepseek/deepseek-v4.1-flash')).toHaveLength(1);
+  expect(() => modelId('openrouter/deepseek/deepseek-v4.1-flash')).toThrow();
 });
 it('rejects remote test-control URLs', () => {
   expect(() => localBaseUrl('https://example.com')).toThrow();

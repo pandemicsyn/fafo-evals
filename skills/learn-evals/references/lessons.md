@@ -119,7 +119,7 @@ After the judge command, inspect terminal counts `agreements`, `falseAccepts`, `
 
 Before reading reference answers or historical captures, run `npm run lesson -- 7 --validation` and save your labels in `.learn-evals/validation-labels.json` using the same object structure with the displayed validation IDs (`pair-04` through `pair-06`). Then run `npm run evals:judge -- --validation --labels=.learn-evals/validation-labels.json`. Keep validation separate from your edits. The supplied validation batch was inspected during v2 development; it is practice data, not an untouched quality estimate. Use fresh cases for an independent check after tuning.
 
-After labels for both batches are saved, ask the tutor for the lesson 7 debrief in [the reference approaches](solutions.md), or run `npm run examples -- judge-disagreement`. That is a historical Nemotron/v1 judge capture, not the current Flash/v2 judge. It is not a failure you must reproduce.
+After labels for both batches are saved, ask the tutor for the lesson 7 debrief in [the reference approaches](solutions.md), or run `npm run examples -- judge-disagreement`. That is a historical Nemotron/v1 judge capture, not the current DeepSeek/v2 judge. It is not a failure you must reproduce.
 
 Completion: explain a disagreement with quoted evidence, or challenge the judge with a new borderline pair if it agrees on everything. Keep API/parse errors out of semantic pass/fail counts. No required issue means the quality criterion is inapplicable; a missing required issue is a failed outcome.
 

@@ -32,8 +32,11 @@ Copy `.dev.vars.example` to `.dev.vars` and add your OpenRouter API key locally.
 ```dotenv
 OPENROUTER_API_KEY=your-key-here
 TRIAGE_MODEL=nvidia/nemotron-3-super-120b-a12b:free
-JUDGE_MODEL=z-ai/glm-5.3-flash
+JUDGE_MODEL=deepseek/deepseek-v4.1-flash
+JUDGE_PROVIDER=deepseek
 ```
+
+For the judge, optional `JUDGE_PROVIDER` selects a preferred OpenRouter provider slug, such as `fireworks` or `deepseek`. Leave it blank for automatic routing. OpenRouter may fall back to another provider serving the same model if the preferred provider is unavailable. Judge artifacts record the routing preference and the actual provider for each completed response; inspect those when comparing runs. This does not retry a completed grade or switch the selected model.
 
 Both model settings take raw OpenRouter IDs. Override either independently and restart the app. The app adds Flue's `openrouter/` prefix internally. Environment variables already set in your shell take precedence over `.dev.vars`. Your coding-agent subscription/login is separate from this app's model calls.
 
@@ -54,11 +57,11 @@ The app binds to `127.0.0.1:3583`. Its local test-control routes allocate, inspe
 
 ### Free models and upgrades
 
-The application defaults to `nvidia/nemotron-3-super-120b-a12b:free`; the optional judge defaults to `z-ai/glm-5.3-flash`. Free models make live experimentation accessible. Judge choice still depends on agreement with human labels: a model that handles triage reasonably can miss invented facts when grading issue text. Lesson 7 explores that distinction.
+The application defaults to `nvidia/nemotron-3-super-120b-a12b:free`; the optional judge defaults to `deepseek/deepseek-v4.1-flash`. Free models make live experimentation accessible. Judge choice still depends on agreement with human labels: a model that handles triage reasonably can miss invented facts when grading issue text. Lesson 7 explores that distinction.
 
 Use `npm run models` to inspect current free, tool-capable OpenRouter models and whether this pinned Flue catalog recognizes them. [OpenRouter's free collection](https://openrouter.ai/collections/free-models) changes over time. A specific model ID makes comparisons easier to interpret than `openrouter/free`, which can select different models.
 
-An inexpensive upgrade candidate is [GLM 5.3 Flash](https://openrouter.ai/z-ai/glm-5.3-flash). Judge suitability comes from calibration against your labels, not its price or benchmark ranking. See [verification notes](verification.md) for the actual smoke-test evidence and limits.
+[DeepSeek V4.1 Flash](https://openrouter.ai/deepseek/deepseek-v4.1-flash) is the paid judge used in the walkthrough. Judge suitability comes from calibration against your labels, not its price or benchmark ranking. See [verification notes](verification.md) for the actual smoke-test evidence and limits.
 
 ## Exercises and commands
 
@@ -114,7 +117,7 @@ JSON inputs are validated with Valibot. `npm run lint` uses type-aware Oxlint ru
 
 Versions are pinned in `package.json` and `package-lock.json`. Flue 2.0.4's published Vite package has an unresolved `workspace:*` runtime dependency; the npm override pins it to the matching runtime release. Vitest is pinned to 4 because vitest-evals 0.16.1 requires `<5`.
 
-Pi's pinned catalog predates GLM 5.3 Flash. `src/provider.ts` adds its public metadata to the normal OpenRouter provider and caps application response size; authentication/streaming still use Pi. Refresh that metadata when changing the lockfile. The judge calls OpenRouter's chat-completions endpoint and validates its JSON locally.
+Pi's pinned catalog predates DeepSeek V4.1 Flash. `src/provider.ts` adds its public metadata to the normal OpenRouter provider and caps application response size; authentication/streaming still use Pi. Refresh that metadata when changing the lockfile. The judge calls OpenRouter's chat-completions endpoint and validates its JSON locally.
 
 This repository, including its original code, issue fixtures, teaching prose, and installable skill, is licensed under the [Apache License 2.0](../LICENSE).
 
